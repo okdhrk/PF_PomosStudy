@@ -6,4 +6,8 @@ Rails.application.routes.draw do
 
   root to: 'homes#top'
   get 'homes/about'
+
+  resources :users, only: [:edit, :index, :show, :update]
+  get 'users/unsubscribe' => 'users#unsubscribe'
+
 end

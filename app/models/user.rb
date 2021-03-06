@@ -15,4 +15,6 @@ class User < ApplicationRecord
     end
   end
 
+  attachment :image
+
 end
