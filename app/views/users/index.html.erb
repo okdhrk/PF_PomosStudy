@@ -14,7 +14,19 @@
           <%= attachment_image_tag user, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
           <%= user.name %>
           <%= user.user_genre %>
-          フォローするボタン
+          </tr>
+          <tr>
+          <% if user_signed_in? && user != current_user%>
+                  <div id=<%= "follow_form" +  user.id.to_s %>>
+                  <% if current_user.followings?(user) %>
+                    <%= render "relationships/unfollow", user: user %>
+                  <% else %>
+                    <%= render "relationships/follow", user: user %>
+                  <% end %>
+                  </div>
+                <% end %>
+          </tr>
+        <tr>
           ユーザーのジャンル
           ベストアンサーの数
           <%= link_to "Usersのshow", user_path(user) %><br>
