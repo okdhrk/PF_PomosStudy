@@ -65,3 +65,8 @@ gem 'bootstrap', '~> 4.5'
 
 # ログイン
 gem 'devise'
+
+# googleログイン
+gem 'omniauth','1.9.1'
+gem 'omniauth-google-oauth2'
+gem 'dotenv-rails'
