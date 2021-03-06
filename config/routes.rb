@@ -10,4 +10,6 @@ Rails.application.routes.draw do
   resources :users, only: [:edit, :index, :show, :update]
   get 'users/unsubscribe' => 'users#unsubscribe'
 
+  resources :relationships, only: [:create, :destroy,]
+
 end

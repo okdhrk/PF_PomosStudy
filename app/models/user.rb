@@ -17,4 +17,22 @@ class User < ApplicationRecord
 
   attachment :image
 
+  # フォローフォロワー機能
+  has_many :relationships
+  has_many :followings, through: :relationships, source: :follow
+  has_many :reverse_of_relationships, class_name: 'Relationship', foreign_key: 'follow_id'
+  has_many :followers, through: :reverse_of_relationships, source: :user
+
+  def followings?(other_user)
+    self.followings.include?(other_user)
+  end
+
+  def follow(other_user)
+    self.relationships.create(follow_id: other_user.id)
+  end
+
+  def unfollow(other_user)
+    self.relationships.find_by(follow_id: other_user.id).destroy
+  end
+
 end
