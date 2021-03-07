@@ -1,0 +1,3 @@
+<!--tweet comment create-->
+$("#tweetcomment_<%= @tweets.id %>").html("<%= j(render "tweet_comments/tweet_comment_show", tweet: @tweet, tweet_comment: comment ) %>");
+$("textarea").val('');

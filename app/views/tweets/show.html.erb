@@ -7,6 +7,32 @@
 <%= @tweets.user.name %>
 <%= @tweets.body %>
 いいねボタン
-コメント数
+コメント数：<%= @tweets.tweet_comments.count %>
+コメント<br>
+<!--コメント一覧-->
+
+<% @tweets.tweet_comments.each do |tweet_comment| %>
+  <tr>
+    <td>
+      <%= attachment_image_tag tweet_comment.user, :image, :fill, 60, 60, fallback: "no_image.jpg" %><br>
+      <%= tweet_comment.user.name %>
+    </td>
+    <td>
+      <%= tweet_comment.comment %>
+    </td>
+
+    <td>
+      <% if tweet_comment.user == current_user %>
+        <%#= link_to "Destroy", tweet_tweet_comment_path(@tweets, tweet_comment), method: :delete %>
+      <% end %>
+    </td>
+  </tr>
+<% end %>
+
+<!--作成フォーム-->
+<%= form_with(model:[@tweets, @tweet_comment] ) do |f| %>
+<%= f.text_area :comment, rows:'5', cols:'80' %>
+<%= f.submit "送信" %>
+<% end %>
 
 <%= link_to "tweetsのindex", tweets_path %>
