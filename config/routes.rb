@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  get 'tweets/index'
+  get 'tweets/new'
+  get 'tweets/show'
   devise_for :users, controllers: {
     omniauth_callbacks: 'users/omniauth_callbacks'
   }
