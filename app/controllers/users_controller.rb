@@ -24,12 +24,25 @@ class UsersController < ApplicationController
 
   def unsubscribe
   end
+  
+  # フォロー機能
+  def followings
+    @user =User.find(params[:id])
+    @users =@user.followings.page(params[:page])
+    render :show_followings
+  end
+  
+  def followers
+    @user =User.find(params[:id])
+    @users =@user.followers.page(params[:page])
+    render :show_followers
+  end
 
 
   private
 
   def user_params
-    params.require(:user).permit(:name, :profile_image)
+    params.require(:user).permit(:name, :image)
   end
 
 end
