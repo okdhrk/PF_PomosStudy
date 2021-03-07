@@ -34,5 +34,8 @@ class User < ApplicationRecord
   def unfollow(other_user)
     self.relationships.find_by(follow_id: other_user.id).destroy
   end
+  
+  # tweet
+  has_many :tweets, dependent: :destroy
 
 end
