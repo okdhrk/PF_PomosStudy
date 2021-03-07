@@ -1,0 +1,12 @@
+<h1>Tweets#show</h1>
+<p>Find me in app/views/tweets/show.html.erb</p>
+
+<%= link_to user_path(@tweets.user.id) do %>
+<%= attachment_image_tag @tweets.user, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
+<% end %>
+<%= @tweets.user.name %>
+<%= @tweets.body %>
+いいねボタン
+コメント数
+
+<%= link_to "tweetsのindex", tweets_path %>
