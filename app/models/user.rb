@@ -37,5 +37,9 @@ class User < ApplicationRecord
   
   # tweet
   has_many :tweets, dependent: :destroy
+  
+  # tweet_comment
+  has_many :tweet_comments
+  
 
 end

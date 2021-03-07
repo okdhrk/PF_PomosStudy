@@ -15,5 +15,7 @@ Rails.application.routes.draw do
   get 'followers_user' => 'users#followers'
   
   resources :tweets, only: [:index, :new, :create, :destroy, :show]
+  
+  resources :tweet_comments, only: [:create, :destroy]
 
 end
