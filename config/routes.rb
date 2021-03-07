@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'tweets/index'
-  get 'tweets/new'
-  get 'tweets/show'
   devise_for :users, controllers: {
     omniauth_callbacks: 'users/omniauth_callbacks'
   }
@@ -17,6 +14,6 @@ Rails.application.routes.draw do
   get 'followings_user' => 'users#followings'
   get 'followers_user' => 'users#followers'
   
-  resources :tweets, only: [:index, :new, :show]
+  resources :tweets, only: [:index, :new, :create, :destroy, :show]
 
 end
