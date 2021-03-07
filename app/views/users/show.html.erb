@@ -20,10 +20,10 @@
                   <% end %>
                   </div>
                 <% end %>
-                
-
+ 
+<!--ログインしているユーザーのみ編集可能-->
+<% if @user == current_user %>
 <%= link_to "Usersのedit", edit_user_path(@user) %>
-
+<% end %>
 
 <%= link_to "Usersのindex", users_path %>
-
