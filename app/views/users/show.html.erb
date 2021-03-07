@@ -5,6 +5,16 @@
 <%= @user.name %>
 フォロワー数
 フォロー数
-フォローするボタン
+<% if user_signed_in? && @user != current_user%>
+                  <div id=<%= "follow_form" +  @user.id.to_s %>>
+                  <% if current_user.followings?(@user) %>
+                    <%= render "relationships/unfollow", user: @user %>
+                  <% else %>
+                    <%= render "relationships/follow", user: @user %>
+                  <% end %>
+                  </div>
+                <% end %>
 
 <%= link_to "Usersのedit", edit_user_path(@user) %>
+
+<%= link_to "Usersのindex", users_path %>
