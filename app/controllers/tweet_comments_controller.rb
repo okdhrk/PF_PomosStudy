@@ -10,17 +10,15 @@ class TweetCommentsController < ApplicationController
 
   # 未完成
   def destroy
-    @tweet = Tweet.find(params[:tweet_id])
-    tweet_comment = @tweet.tweet_comments.find(params[:id])
-    tweet_comment.destroy
-    redirect_to tweet_path(@tweet)
+    TweetComment.find_by(id: params[:id], tweet_id: params[:tweet_id]).destroy
+    redirect_to tweet_path(params[:tweet_id])
   end
 
 
   private
 
   def tweet_comment_params
-    params.require(:tweet_comment).permit(:comment)
+    params.require(:tweet_comment).permit(:comment, :tweet_id)
   end
 
 end
