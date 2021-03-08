@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_08_124112) do
+ActiveRecord::Schema.define(version: 2021_03_08_125945) do
 
   create_table "claps", force: :cascade do |t|
     t.integer "user_id"
-    t.integer "tweet_ig"
+    t.integer "tweet_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -6,7 +6,21 @@
 <% end %>
 <%= @tweet.user.name %>
 <%= @tweet.body %>
-いいねボ
+<!--いいねボタン-->
+<% if @tweet.claped_by?(current_user) %>
+    <p>
+      <%= link_to tweet_claps_path(@tweet), method: :delete do %>
+        ♥<%= @tweet.claps.count %> いいね
+      <% end %>
+    </p>
+    <% else %>
+    <p>
+      <%= link_to tweet_claps_path(@tweet), method: :post do %>
+        ♡<%= @tweet.claps.count %> いいね
+      <% end %>
+    </p>
+  <% end %>
+
 コメント数：<%= @tweet.tweet_comments.count %>
 コメント<br>
 <!--コメント一覧-->
