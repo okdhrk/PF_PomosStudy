@@ -1,13 +1,17 @@
 class ClapsController < ApplicationController
-  
+
   def create
     tweet = Tweet.find(params[:tweet_id])
-    favorite = current_user.favorites.new(post_image_id: post_image.id)
-    favorite.save
-    redirect_to post_image_path(post_image)
+    clap = current_user.claps.new(tweet_id: tweet.id)
+    clap.save
+    redirect_back(fallback_location: root_path)
   end
-  
+
   def destroy
+    tweet = Tweet.find(params[:tweet_id])
+    clap = current_user.claps.find_by(tweet_id: tweet.id)
+    clap.destroy
+    redirect_back(fallback_location: root_path)
   end
 
 end
