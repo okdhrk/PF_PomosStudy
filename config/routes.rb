@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
 
+  get 'questions/index'
+  get 'questions/show'
+  get 'questions/new'
+  get 'questions/create'
+  get 'questions/edit'
+  get 'questions/update'
+  get 'questions/destroy'
   devise_for :users, controllers: {
     omniauth_callbacks: 'users/omniauth_callbacks'
   }
@@ -18,5 +25,7 @@ Rails.application.routes.draw do
     resource :claps, only: [:create, :destroy]
     resources :tweet_comments, only: [:create, :destroy]
   end
+
+  resources :questions
 
 end
