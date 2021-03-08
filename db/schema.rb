@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_07_093824) do
+ActiveRecord::Schema.define(version: 2021_03_08_124112) do
+
+  create_table "claps", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "tweet_ig"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "relationships", force: :cascade do |t|
     t.integer "user_id"
