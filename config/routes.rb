@@ -13,7 +13,10 @@ Rails.application.routes.draw do
   resources :relationships, only: [:create, :destroy,]
   get 'followings_user' => 'users#followings'
   get 'followers_user' => 'users#followers'
-  
-  resources :tweets, only: [:index, :new, :create, :destroy, :show]
+
+  resources :tweets, only: [:index, :new, :create, :destroy, :show] do
+    resource :favorites, only: [:create, :destroy]
+    resources :tweet_comments, only: [:create, :destroy]
+  end
 
 end

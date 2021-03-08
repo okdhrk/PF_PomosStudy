@@ -1,0 +1,5 @@
+<!--tweetcomment new-->
+<%= form_with(model:[tweet, tweet_comment], local: true ) do |f| %>
+<%= f.text_area :comment, rows:'5', cols:'80' %>
+<%= f.submit "送信" %>
+<% end %>

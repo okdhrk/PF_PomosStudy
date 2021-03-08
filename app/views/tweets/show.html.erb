@@ -1,12 +1,40 @@
 <h1>Tweets#show</h1>
 <p>Find me in app/views/tweets/show.html.erb</p>
 
-<%= link_to user_path(@tweets.user.id) do %>
-<%= attachment_image_tag @tweets.user, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
+<%= link_to user_path(@tweet.user.id) do %>
+<%= attachment_image_tag @tweet.user, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
 <% end %>
-<%= @tweets.user.name %>
-<%= @tweets.body %>
+<%= @tweet.user.name %>
+<%= @tweet.body %>
 いいねボタン
-コメント数
+コメント数：<%= @tweet.tweet_comments.count %>
+コメント<br>
+<!--コメント一覧-->
+
+<% @tweet.tweet_comments.each do |tweet_comment| %>
+  <tr>
+    <td>
+      <%= attachment_image_tag tweet_comment.user, :image, :fill, 60, 60, fallback: "no_image.jpg" %><br>
+      <%= tweet_comment.user.name %>
+    </td>
+    <td>
+      <%= tweet_comment.comment %>
+    </td>
+
+    <td>
+        <% if tweet_comment.user == current_user %>
+  <div class="comment-delete">
+    <%= link_to "削除", tweet_tweet_comment_path(tweet_comment.tweet, tweet_comment), method: :delete %>
+  </div>
+        <% end %>
+    </td>
+  </tr>
+<% end %>
+
+<!--作成フォーム-->
+<%= form_with(model:[@tweet, @tweet_comment], local: true ) do |f| %>
+<%= f.text_area :comment, rows:'5', cols:'80' %>
+<%= f.submit "送信" %>
+<% end %>
 
 <%= link_to "tweetsのindex", tweets_path %>
