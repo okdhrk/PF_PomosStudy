@@ -1,0 +1,11 @@
+<h1>Tasks#new</h1>
+<p>Find me in app/views/tasks/new.html.erb</p>
+
+<%= form_with model: @task, local:true do |f| %>
+
+  <h4>本文</h4>
+  <%= f.text_area :body %>
+
+  <%= f.submit '投稿' %>
+
+<% end %>

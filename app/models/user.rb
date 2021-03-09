@@ -50,5 +50,8 @@ class User < ApplicationRecord
   # answer
   has_many :answers
 
+  # task
+  has_many :tasks, dependent: :destroy
+
 
 end
