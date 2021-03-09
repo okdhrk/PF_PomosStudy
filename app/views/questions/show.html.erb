@@ -10,4 +10,32 @@
 
 <%= link_to "questionのedit", edit_question_path(@question) %>
 
-<%= link_to "削除", question_path(@question), method: :delete %>
+<!--コメント作成フォーム-->
+<%= form_with(model:[@question, @answer], local: true ) do |f| %>
+<%= f.text_area :body, rows:'5', cols:'80' %>
+<%= f.submit "送信" %>
+<% end %>
+
+<!--コメント一覧-->
+<% @question.answers.each do |answer| %>
+  <tr>
+    <td>
+      <%= attachment_image_tag answer.user, :image, :fill, 60, 60, fallback: "no_image.jpg" %><br>
+      <%= answer.user.name %>
+    </td>
+    <td>
+      <%= answer.body %>
+    </td>
+
+    <td>
+        <% if answer.user == current_user %>
+  <div class="comment-delete">
+    <%= link_to "answer削除", question_answer_path(answer.question, answer), method: :delete %>
+  </div>
+        <% end %>
+    </td>
+  </tr>
+<% end %>
+
+<%= link_to "question削除", question_path(@question), method: :delete %>
+

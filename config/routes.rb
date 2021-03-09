@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   resources :users, only: [:edit, :index, :show, :update]
   get 'users/unsubscribe' => 'users#unsubscribe'
 
-  resources :relationships, only: [:create, :destroy,]
+  resources :relationships, only: [:create, :destroy]
   get 'followings_user' => 'users#followings'
   get 'followers_user' => 'users#followers'
 
@@ -26,6 +26,8 @@ Rails.application.routes.draw do
     resources :tweet_comments, only: [:create, :destroy]
   end
 
-  resources :questions
+  resources :questions do
+    resources :answers, only: [:create, :destroy]
+  end
 
 end
