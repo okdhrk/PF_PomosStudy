@@ -8,12 +8,26 @@
 <%= @question.title %>
 <%= @question.body %>
 
-<%= link_to "questionのedit", edit_question_path(@question) %>
+<!--解決ボタン-->
+<% if @question.is_solved == false %>
+<% if current_user.id == @question.user_id %>
+  <%= form_with(model: @question, local: true ) do |f| %>
+    <%= f.check_box :is_solved, autofocus: true %>
+    <%= f.submit "解決済み" %>
+  <% end %>
+<% end %>
+<% end %>
+
+<% if current_user.id == @question.user_id %>
+  <%= link_to_unless @question.best_answer_id, 'questionのedi', edit_question_path(@question) %>
+<% end %>
 
 <!--コメント作成フォーム-->
-<%= form_with(model:[@question, @answer], local: true ) do |f| %>
-<%= f.text_area :body, rows:'5', cols:'80' %>
-<%= f.submit "送信" %>
+<% if @question.is_solved == false %>
+  <%= form_with(model:[@question, @answer], local: true ) do |f| %>
+  <%= f.text_area :body, rows:'5', cols:'80' %>
+  <%= f.submit "送信" %>
+  <% end %>
 <% end %>
 
 <!--コメント一覧-->
@@ -24,18 +38,32 @@
       <%= answer.user.name %>
     </td>
     <td>
+      <div class="card-body  <%= "best-answer" if @question.best_answer_id == answer.id %>">
       <%= answer.body %>
+      </div>
     </td>
 
     <td>
         <% if answer.user == current_user %>
   <div class="comment-delete">
-    <%= link_to "answer削除", question_answer_path(answer.question, answer), method: :delete %>
+    <%= link_to_unless @question.best_answer_id, 'answer削除', edit_question_path(@question) %>
   </div>
         <% end %>
     </td>
   </tr>
+
+  <!--ベストアンサーボタン-->
+<div class="ba-child text-center">
+          <%= form_with(model: @question, local: true, data: {confirm: "#{answer.user.name}さんの回答をベストアンサーにします。この修正は変更できませんが、よろしいですか？"}) do |f| %>
+            <%= f.hidden_field :best_answer_id, value: @answer %>
+              <%= f.submit 'BA', disabled: @question.best_answer_id.present? %>
+          <% end %>
+</div>
+
 <% end %>
 
-<%= link_to "question削除", question_path(@question), method: :delete %>
+
+<% if current_user.id == @question.user_id %>
+  <%= link_to_unless @question.best_answer_id, 'question削除', question_path(@question), method: :delete %>
+<% end %>
 

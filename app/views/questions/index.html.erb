@@ -15,5 +15,12 @@
 
   <%= link_to "Questionのshow", question_path(question) %>
 
+
+  <% if question.is_solved == true %>
+  解決済み
+  <% else %>
+  回答受付中
+  <% end %>
+
 <% end %>
 
