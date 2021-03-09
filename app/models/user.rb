@@ -44,5 +44,11 @@ class User < ApplicationRecord
   # clap
   has_many :claps, dependent: :destroy
 
+  # question
+  has_many :questions
+
+  # answer
+  has_many :answers
+
 
 end
