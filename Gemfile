@@ -76,3 +76,6 @@ gem "refile-mini_magick"
 
 # js
 gem 'jquery-rails'
+
+# カレンダー
+gem 'simple_calendar', '~> 2.0'
