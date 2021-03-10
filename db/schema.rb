@@ -51,8 +51,6 @@ ActiveRecord::Schema.define(version: 2021_03_09_082600) do
   create_table "tasks", force: :cascade do |t|
     t.integer "user_id"
     t.text "body"
-    t.date "target_at"
-    t.date "completed_at"
     t.boolean "completed", default: false
     t.datetime "start_time"
     t.datetime "created_at", null: false
