@@ -7,7 +7,7 @@
   <%= f.text_area :body %>
 
   <h4>締切日</h4>
-  <%= f.date_select :target_at, use_month_numbers: true, start_year:Date.today.year %>
+  <%= f.date_select :start_time, use_month_numbers: true, start_year:Date.today.year %>
   <!--use_month_numbersで数字で月を表す-->
 
   <%= f.submit '投稿' %>

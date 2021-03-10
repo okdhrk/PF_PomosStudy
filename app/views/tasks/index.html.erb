@@ -3,13 +3,25 @@
 
 <% @tasks.each do |task| %>
 <!--タスク完了ボタン-->
-<%= form_with model: @task, local:true do |f| %>
-    <%= f.hidden_field :completed, value: @tasks %>
-  <%= f.submit '投稿' %>
+<%= form_with(model: task, local: true ) do |f| %>
+<div class="btn-group" role="group" aria-label="Basic example">
+  <div class="col-sm-2">
+    <%= f.label :completed, 'status', {class: 'form-label'} %>
+  </div>
+  <div class="col-sm-10 btn-group" data-toggle="buttons">
+    <label class="btn btn-light" style="width:10%">
+      <%= f.radio_button :completed, false, {checked: true} %> まだ
+    </label>
+    <label class="btn btn-light" style="width:10%">
+      <%= f.radio_button :completed, true, {} %> やった
+    </label>
+  </div>
+</div>
+  <%= f.submit '更新' %>
 <% end %>
 
     <%= task.body %>
-    締切日<%= I18n.l task.target_at, format: :short %>
+    締切日<%= I18n.l task.start_time, format: :short %>
 
     <%= link_to 'Show', task_path(task) %><
     <%= link_to 'Edit', edit_task_path(task) %><
@@ -17,3 +29,12 @@
   <% end %>
 <p><%= link_to 'ToDoの作成', new_task_path %></p>
 
+
+<%= month_calendar events: @tasks do |date, tasks| %>
+<%= date.day %>
+
+    <% tasks.each do |task| %>
+    <%= task.body %>
+    <% end %>
+    
+<% end %>

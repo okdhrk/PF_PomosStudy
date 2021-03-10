@@ -6,6 +6,7 @@ class CreateTasks < ActiveRecord::Migration[5.2]
       t.date :target_at
       t.date :completed_at
       t.boolean :completed, default: false
+      t.datetime :start_time
 
       t.timestamps
     end

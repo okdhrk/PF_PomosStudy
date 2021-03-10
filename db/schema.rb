@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 2021_03_09_082600) do
     t.date "target_at"
     t.date "completed_at"
     t.boolean "completed", default: false
+    t.datetime "start_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
