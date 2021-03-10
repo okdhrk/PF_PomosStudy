@@ -2,6 +2,12 @@
 <p>Find me in app/views/tasks/index.html.erb</p>
 
 <% @tasks.each do |task| %>
+<!--タスク完了ボタン-->
+<%= form_with model: @task, local:true do |f| %>
+    <%= f.hidden_field :completed, value: @tasks %>
+  <%= f.submit '投稿' %>
+<% end %>
+
     <%= task.body %>
     締切日<%= I18n.l task.target_at, format: :short %>
 
@@ -10,3 +16,4 @@
     <%= link_to 'Delete', task_path(task), method: :delete %><
   <% end %>
 <p><%= link_to 'ToDoの作成', new_task_path %></p>
+
