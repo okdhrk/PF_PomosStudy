@@ -6,6 +6,10 @@
   <h4>本文</h4>
   <%= f.text_area :body %>
 
+  <h4>締切日</h4>
+  <%= f.date_select :target_at, use_month_numbers: true, start_year:Date.today.year %>
+  <!--use_month_numbersで数字で月を表す-->
+
   <%= f.submit '投稿' %>
 
 <% end %>

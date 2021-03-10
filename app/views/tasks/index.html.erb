@@ -2,7 +2,9 @@
 <p>Find me in app/views/tasks/index.html.erb</p>
 
 <% @tasks.each do |task| %>
-    <%= task.body %><
+    <%= task.body %>
+    締切日<%= I18n.l task.target_at, format: :short %>
+
     <%= link_to 'Show', task_path(task) %><
     <%= link_to 'Edit', edit_task_path(task) %><
     <%= link_to 'Delete', task_path(task), method: :delete %><

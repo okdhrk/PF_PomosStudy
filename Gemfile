@@ -79,3 +79,6 @@ gem 'jquery-rails'
 
 # カレンダー
 gem 'simple_calendar', '~> 2.0'
+
+# 日付
+gem 'i18n_generators'
