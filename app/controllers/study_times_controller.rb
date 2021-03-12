@@ -5,7 +5,13 @@ class StudyTimesController < ApplicationController
     @study_time = StudyTime.all
   end
 
+  def study_time
+    @user = current_user
+    @study_time = StudyTime.all
+  end
+
   def edit
+    @study_time = StudyTime.find(params[:id])
   end
 
   def new
@@ -21,12 +27,20 @@ class StudyTimesController < ApplicationController
   def update
     user = current_user
     study_time = user.study_times.last
+    # 終了時刻の打刻
     if study_time.update(study_time_params)
     redirect_to study_times_path
+    # 打刻の変更
+    elsif study_times = user.study_times
+    study_times.update(study_time_params)
+    redirect_to edit_study_time_path(study_times.id)
     end
   end
 
   def destroy
+    study_time = StudyTime.find(params[:id])
+    study_time.destroy
+    redirect_to study_times_study_time_path
   end
 
 

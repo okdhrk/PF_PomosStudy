@@ -1,0 +1,8 @@
+<h1>編集画面</h1>
+<%= form_with model:@study_times, local:true do |f| %>
+  <h4>開始時刻</h4>
+  <%= f.text_field :created_at %>
+  <h4>終了時刻</h4>
+  <%= f.text_field :updated_at %>
+  <%= f.submit '保存' %>
+<% end %>
