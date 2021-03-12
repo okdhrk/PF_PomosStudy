@@ -1,0 +1,23 @@
+<h1>StudyTimes#index</h1>
+<p>Find me in app/views/study_times/index.html.erb</p>
+
+<% if @user.study_times.empty? %>
+  <%= form_with model: @study_time, url: study_times_path, method: :post, local:true do |f| %>
+    <%= f.text_area :memo %>
+    <%= f.submit '開始' %>
+  <% end %>
+
+<% elsif @user.study_times.last.updated_at != @user.study_times.last.created_at%>
+
+  <%= form_with model: @study_time, url: study_times_path, method: :post, local:true do |f| %>
+    <%= f.text_area :memo %>
+    <%= f.submit '開始' %>
+  <% end %>
+
+<% elsif @user.study_times.last.updated_at == @user.study_times.last.created_at %>
+  <%= form_with model: @study_time, url: study_time_path(@study_time), method: :PATCH, local:true do |f| %>
+    <%= f.text_area :memo %>
+    <%= f.submit '終了' %>
+  <% end %>
+
+<% end %>

@@ -1,0 +1,17 @@
+<% @tasks.each do |task| %>
+  タイトル：<%= task.title %>
+
+  <% if task.start_time != nil %>
+    開始時刻：
+    <%= task.start_time.created_at %>
+  <% end %>
+
+
+
+
+
+
+  <% if task.stop_time != nil %>
+    終了時刻：<%= task.stop_time.created_at %>
+  <% end %>
+<% end %>
