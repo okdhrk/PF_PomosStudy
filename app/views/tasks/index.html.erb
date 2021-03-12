@@ -1,40 +1,77 @@
 <h1>Tasks#index</h1>
 <p>Find me in app/views/tasks/index.html.erb</p>
 
-<% @tasks.each do |task| %>
-<!--タスク完了ボタン-->
-<%= form_with(model: task, local: true ) do |f| %>
-<div class="btn-group" role="group" aria-label="Basic example">
-  <div class="col-sm-2">
-    <%= f.label :completed, 'status', {class: 'form-label'} %>
-  </div>
-  <div class="col-sm-10 btn-group" data-toggle="buttons">
-    <label class="btn btn-light" style="width:10%">
-      <%= f.radio_button :completed, false, {checked: true} %> まだ
-    </label>
-    <label class="btn btn-light" style="width:10%">
-      <%= f.radio_button :completed, true, {} %> やった
-    </label>
-  </div>
-</div>
-  <%= f.submit '更新' %>
-<% end %>
-
-    <%= task.body %>
-    締切日<%= I18n.l task.start_time, format: :short %>
-
-    <%= link_to 'Show', task_path(task) %><
-    <%= link_to 'Edit', edit_task_path(task) %><
-    <%= link_to 'Delete', task_path(task), method: :delete %><
-  <% end %>
-<p><%= link_to 'ToDoの作成', new_task_path %></p>
-
-
+<!--カレンダーの書き込み-->
 <%= month_calendar events: @tasks do |date, tasks| %>
 <%= date.day %>
 
     <% tasks.each do |task| %>
     <%= task.body %>
     <% end %>
-    
+
 <% end %>
+
+
+<%= form_with model: @tasks, url: tasks_path, local:true do |f| %>
+
+  <h4>本文</h4>
+  <%= f.text_area :body %>
+
+  <h4>締切日</h4>
+  <%= f.date_select :start_time, use_month_numbers: true, start_year:Date.today.year %>
+  <!--use_month_numbersで数字で月を表す-->
+
+  <%= f.submit '投稿' %>
+
+<% end %>
+
+
+
+
+<% @tasks.each do |task| %>
+
+<%= task.body %>
+    締切日<%= I18n.l task.start_time, format: :short %>
+
+<% end %>
+
+
+<% @sum = Time.new %>
+<% @tasks.each do |task| %>
+  タイトル：<%= task.body %>
+
+  <% if task.begin_time != nil %>
+    開始時刻：
+    <%= task.begin_time.created_at %>
+  <% end %>
+
+  <% if task.begin_time == nil %>
+    <%= form_with model: task.begin_time, url: task_begin_times_path(task.id), method: :post, local:true do |f| %>
+    <%# f.hidden_field :created_at, :value => task.begin_time.created_at %>
+    <%= f.submit '開始' %>
+    <% end %>
+  <% end %>
+
+
+
+
+  <% if task.stop_time != nil %>
+    終了時刻：<%= task.stop_time.created_at %>
+  <% end %>
+
+  <% if task.begin_time != nil && task.stop_time == nil %>
+    <%= form_with model: task.stop_time, url: task_stop_times_path(task.id), method: :post, local:true do |f| %>
+    <%= f.submit '終了' %>
+    <% end %>
+  <% end %>
+
+
+<% if task.stop_time != nil %>
+
+    <%= @a = Time.at(task.stop_time.created_at - task.start_time.created_at).utc.strftime('%H時間''%M分') %>
+  <% end %><br><br><br>
+
+<% @sum = @sum + @a.to_i %>
+<% end %>
+
+合計時間：<%= @sum.utc.strftime('%H時間''%M分') %>

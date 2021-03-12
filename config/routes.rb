@@ -23,7 +23,10 @@ Rails.application.routes.draw do
     resources :answers, only: [:create, :destroy]
   end
 
-  resources :tasks
+  resources :tasks do
+    resources :begin_times, only: [:create]
+    resources :stop_times, only: [:create]
+  end
 
   get   'inquiry'         => 'inquiry#index'     # 入力画面
   post  'inquiry/confirm' => 'inquiry#confirm'   # 確認画面
