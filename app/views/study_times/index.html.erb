@@ -3,12 +3,14 @@
 
 <h2><%= link_to "Show", study_times_study_time_path %></h2>
 
+<!--study_timeが空だったら表示-->
 <% if @user.study_times.empty? %>
   <%= form_with model: @study_time, url: study_times_path, method: :post, local:true do |f| %>
     <%= f.hidden_field :created_at, value: @study_time %>
     <%= f.submit '開始' %>
   <% end %>
 
+<!--updateの最後のレコードがcreateの最後のレコードと値が違ったら表示-->
 <% elsif @user.study_times.last.updated_at != @user.study_times.last.created_at%>
 
   <%= form_with model: @study_time, url: study_times_path, method: :post, local:true do |f| %>
@@ -16,6 +18,7 @@
     <%= f.submit '開始' %>
   <% end %>
 
+<!--updateの最後のレコードがcreateの最後のレコードと値が同じだったら表示-->
 <% elsif @user.study_times.last.updated_at == @user.study_times.last.created_at %>
   <%= form_with model: @study_time, url: study_time_path(@study_time), method: :PATCH, local:true do |f| %>
     memo：<%= f.text_field :memo %>

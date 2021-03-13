@@ -30,10 +30,6 @@ class StudyTimesController < ApplicationController
     # 終了時刻の打刻
     if study_time.update(study_time_params)
     redirect_to study_times_path
-    # 打刻の変更
-    elsif study_times = user.study_times
-    study_times.update(study_time_params)
-    redirect_to edit_study_time_path(study_times.id)
     end
   end
 

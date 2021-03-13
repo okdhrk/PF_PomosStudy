@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   post  'inquiry/confirm' => 'inquiry#confirm'   # 確認画面
   post  'inquiry/thanks'  => 'inquiry#thanks'    # 送信完了画面
 
-  resources :study_times, only: [:index, :new, :create, :destroy, :edit]
+  resources :study_times, only: [:index, :new, :create, :destroy, :edit, :update]
   get 'study_times/study_time' => 'study_times#study_time'
 
 end
