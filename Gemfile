@@ -70,6 +70,10 @@ gem 'devise'
 gem 'omniauth','1.9.1'
 gem 'omniauth-google-oauth2'
 gem 'dotenv-rails'
+# 本番環境
+group :production do
+  gem 'mysql2'
+end
 
 gem "refile", require: "refile/rails", github: 'manfe/refile'
 gem "refile-mini_magick"

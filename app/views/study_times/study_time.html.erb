@@ -1,0 +1,54 @@
+<% @sum = 0 %>
+<% @study_time.each do |study_time| %>
+<% a = study_time.created_at %>
+<% b = study_time.updated_at %>
+<!--開始と終了時刻の差分を少数第一位表示-->
+<% c = (study_time.updated_at - study_time.created_at).round(1) %>
+<!--秒→分に変換して少数第一位表示-->
+<% d = (c/60).round(1) %>
+<!--分→時間に変換して少数第一位表示-->
+<% e = (d/60).round(1) %>
+<% @f = e %>
+<% @sum = @sum + @f %>
+<% end %>
+<h1>今月の合計時間： <%= @sum %> 時間</h1>
+
+<!--合計時間の定義-->
+<% @sum = 0 %>
+<% @study_time.each do |study_time| %>
+<table class="table">
+  <tr>
+    <th>日付</th>
+    <th>学習開始時間</th>
+    <th>学習終了時間</th>
+    <th>合計時間</th>
+    <th>memo</th>
+    <th></th>
+    <th></th>
+  </tr>
+  <tr>
+    <th>
+      <!--開始時刻の定義-->
+      <% a = study_time.created_at %>
+      <%= a.strftime("%-m/%-d(%a)") %>
+    </th>
+    <th><%= a.strftime("%R") %></th>
+    <th>
+      <!--終了時刻の定義-->
+      <% b = study_time.updated_at %>
+      <%= b.strftime("%R") %>
+    </th>
+    <th>
+      <!--開始と終了時刻の差分を少数第一位表示-->
+      <% c = (study_time.updated_at - study_time.created_at).round(1) %>
+      <!--秒→分に変換して少数第一位表示-->
+      <% d = (c/60).round(1) %>
+      <!--分→時間に変換して少数第一位表示-->
+      <%= e = (d/60).round(1) %> 時間
+    </th>
+    <th><%= study_time.memo %></th>
+    <th><%= link_to "時刻訂正", edit_study_time_path(study_time) %></th>
+    <th><%= link_to "削除", study_time_path(study_time), method: :delete %></th>
+  </tr>
+</table>
+<% end %>

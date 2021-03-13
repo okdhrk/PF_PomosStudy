@@ -53,5 +53,8 @@ class User < ApplicationRecord
   # task
   has_many :tasks, dependent: :destroy
 
+  # 勉強時間
+  has_many :study_times, dependent: :destroy
+
 
 end
