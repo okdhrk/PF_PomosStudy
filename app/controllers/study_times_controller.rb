@@ -42,7 +42,7 @@ class StudyTimesController < ApplicationController
 
   private
   def study_time_params
-    params.require(:study_time).permit(:user_id, :memo )
+    params.require(:study_time).permit(:user_id, :memo, :begin_time, :finish_time, :total_time )
   end
 
 end
