@@ -21,6 +21,8 @@ class StudyTimesController < ApplicationController
     study_time = StudyTime.new(study_time_params)
     study_time.user_id = current_user.id
     study_time.save
+    # if文でfinishtimeが値が入ったら、finishtime-begintimeを実行できる文を
+    
     redirect_to study_times_path
   end
 
