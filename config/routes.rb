@@ -4,7 +4,9 @@ Rails.application.routes.draw do
     omniauth_callbacks: 'users/omniauth_callbacks'
   }
 
-  root to: 'homes#top'
+  post '/homes/guest_sign_in', to: 'homes#new_guest'
+
+  root to: 'homes#index'
   get 'homes/about'
 
   resources :users, only: [:edit, :index, :show, :update]
