@@ -21,6 +21,8 @@ class StudyTimesController < ApplicationController
     study_time = StudyTime.new(study_time_params)
     study_time.user_id = current_user.id
     study_time.save
+    # if文でfinishtimeが値が入ったら、finishtime-begintimeを実行できる文を
+    
     redirect_to study_times_path
   end
 
@@ -42,7 +44,7 @@ class StudyTimesController < ApplicationController
 
   private
   def study_time_params
-    params.require(:study_time).permit(:user_id, :memo )
+    params.require(:study_time).permit(:user_id, :memo, :begin_time, :finish_time, :total_time )
   end
 
 end
