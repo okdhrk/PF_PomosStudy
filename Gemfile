@@ -86,3 +86,6 @@ gem 'simple_calendar', '~> 2.0'
 
 # 日付
 gem 'i18n_generators'
+
+# pagenite
+gem 'kaminari','~> 1.2.1'
