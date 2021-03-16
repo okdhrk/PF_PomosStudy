@@ -37,4 +37,8 @@ https://docs.google.com/spreadsheets/d/1zad_6SejdDI8-3nuQs_cqHUrW3rHijGM2gzJfV3x
 - フレームワーク：Ruby on Rails
 - JS ライブラリ：jQuery
 - IDE：Cloud9
--
+
+## 使用素材
+- DesignEvo ( https://www.designevo.com/logo-maker/ )
+- ICOOON MONO ( https://icooon-mono.com/ )
+- O-DAN ( https://o-dan.net/ja/ )
