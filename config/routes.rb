@@ -33,5 +33,6 @@ Rails.application.routes.draw do
 
   resources :study_times, only: [:index, :new, :create, :destroy, :edit, :update]
   get 'study_times/study_time' => 'study_times#study_time'
+  patch 'study_times/study_time/:id' => 'study_times#update_time', as: 'update_time'
 
 end

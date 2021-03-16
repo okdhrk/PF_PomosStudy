@@ -1,5 +1,16 @@
 <% today = Date.today%>
 <caption><%= today.strftime('%Y年%m月')%></caption>
+<% @sum = 0 %>
+<% @study_time.each do |study_time| %>
+    <% aa = study_time.finish_time - study_time.begin_time %>
+    <% ab = (aa / 60 / 60).round(1) %>
+    <% @ac = ab.round(1)  %>
+    <% @sum = (@sum + @ac) %>
+<% end %>
+
+<h2>総合計時間：<%= @sum %></h2>
+<%# byebug %>
+
 <table class="table">
   <tr>
     <th>日付</th>
@@ -39,15 +50,14 @@
             <!--finish_timeに時間が登録されているなら表示する-->
             <% if study_time.finish_time %>
               <% total_time = (study_time.finish_time - study_time.begin_time + total_time) / 60 / 60 %>
-              <%= total_time.round(2) %><br>
+              <%= total_time.round(1) %><br>
 
             <% end %>
           <% end %>
         <% end %>
       </th>
       <th>
-        編集
-        <!--updateアクションを新たにつくってそれで時刻の編集をする-->
+        <%= link_to "編集", edit_study_time_path(@study_time) %>
       </th>
       <th>
         削除
