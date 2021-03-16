@@ -18,7 +18,7 @@
       <th>
         <!--学習時間開始１-->
         <% @study_time.each do |study_time| %>
-          <% if study_time.finish_time == nil && study_time.begin_time.day == c.day %>
+          <% if study_time.begin_time.day == c.day %>
           <%= study_time.begin_time.strftime("%H:%M") %><br>
           <% end %>
         <% end %>
@@ -26,21 +26,28 @@
       <th>
         <!--学習時間終了１-->
         <% @study_time.each do |study_time| %>
-          <% if study_time.begin_time == nil && study_time.finish_time.day == c.day %>
+          <% if study_time.finish_time.day == c.day %>
           <%= study_time.finish_time.strftime("%H:%M") %><br>
           <% end %>
         <% end %>
       </th>
       <th>
+        <!--学習合計時間-->
         <% @study_time.each do |study_time| %>
-          合計時間
-          <%# total_time = 0 %>
+          <% total_time = 0 %>
+          <% if study_time.created_at.strftime("%d").to_i == c.day %>
+            <!--finish_timeに時間が登録されているなら表示する-->
+            <% if study_time.finish_time %>
+              <% total_time = (study_time.finish_time - study_time.begin_time + total_time) / 60 / 60 %>
+              <%= total_time.round(2) %><br>
 
-          <%# total = (study_time.finish_time) - (study_time.begin_time) %>
+            <% end %>
+          <% end %>
         <% end %>
       </th>
       <th>
         編集
+        <!--updateアクションを新たにつくってそれで時刻の編集をする-->
       </th>
       <th>
         削除
