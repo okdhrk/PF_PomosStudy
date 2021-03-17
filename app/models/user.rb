@@ -15,6 +15,9 @@ class User < ApplicationRecord
     end
   end
 
+  # ユーザーのジャンル
+  enum user_genre: { "学校": 0, "資格": 1, "その他": 2 }
+
   attachment :image
 
   # フォローフォロワー機能
