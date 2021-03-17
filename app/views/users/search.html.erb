@@ -1,0 +1,14 @@
+<% @results.each do |result| %>
+
+<thead class="bg-light">
+        <tr>
+          <%= attachment_image_tag result, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
+          <%= result.name %>
+          <%= result.user_genre %>
+          </tr>
+        <tr>
+          <%= link_to "Usersのshow", user_path(result) %><br>
+        </tr>
+      </thead>
+
+<% end %>

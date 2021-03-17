@@ -9,7 +9,11 @@ Rails.application.routes.draw do
   root to: 'homes#index'
   get 'homes/about'
 
-  resources :users, only: [:edit, :index, :show, :update]
+  resources :users, only: [:edit, :index, :show, :update] do
+    collection do
+      get 'search'
+    end
+  end
   get 'users/unsubscribe' => 'users#unsubscribe'
 
   resources :relationships, only: [:create, :destroy]
@@ -23,6 +27,9 @@ Rails.application.routes.draw do
 
   resources :questions do
     resources :answers, only: [:create, :destroy]
+    collection do
+      get 'search'
+    end
   end
 
   resources :tasks

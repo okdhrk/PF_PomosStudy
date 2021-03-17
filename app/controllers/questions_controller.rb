@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+  before_action :set_q, only: [:index, :search]
 
   def index
     @questions = Question.all
@@ -41,8 +42,16 @@ class QuestionsController < ApplicationController
     redirect_to questions_path
   end
 
+  def search
+    @results = @q.result
+  end
+
 
   private
+
+  def set_q
+    @q = Question.ransack(params[:q])
+  end
 
   def question_params
     params.require(:question).permit(:title, :body, :best_answer_id, :user_id, :is_solved, :answer_id)
