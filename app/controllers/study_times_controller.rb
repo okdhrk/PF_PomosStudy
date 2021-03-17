@@ -13,7 +13,7 @@ class StudyTimesController < ApplicationController
   end
 
   def edit
-    @study_times = StudyTime.find_by(begin_time: params[:begin_time], finish_time: params[:finish_time])
+    @study_times = StudyTime.(study_time_params)
   end
 
   def new
@@ -53,6 +53,10 @@ class StudyTimesController < ApplicationController
   private
   def study_time_params
     params.permit(:user_id, :total_time )
+  end
+
+  def study_params
+    params.require(:study_time).permit(:user_id, :created_at, :updated_at)
   end
 
 end

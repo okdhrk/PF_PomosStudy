@@ -1,5 +1,15 @@
 <% today = Date.today%>
-<caption><%= today.strftime('%Y年%m月')%></caption>
+<% @sum = 0 %>
+<% @study_time.each do |study_time| %>
+    <% aa = study_time.updated_at - study_time.created_at %>
+    <% ab = (aa / 60 / 60).round(1) %>
+    <% @ac = ab.round(1)  %>
+    <% @sum = (@sum + @ac) %>
+<% end %>
+<caption>
+  <%= today.strftime('%Y年%m月')%>
+  <%= @sum %>時間学習中
+</caption>
 
 
 <table class="table">
@@ -8,7 +18,6 @@
     <th>学習開始時間</th>
     <th>学習終了時間</th>
     <th>合計時間</th>
-    <th></th>
   </tr>
 <% month = today.strftime('%m')%>
 <% d = today.at_beginning_of_month.at_beginning_of_week %>
@@ -20,7 +29,7 @@
         <!--学習時間開始-->
         <% @study_time.each do |study_time| %>
           <% if study_time.created_at.day == c.day %>
-            <%= study_time.created_at.strftime("%H:%M") %><br><br>
+            <%= study_time.created_at.strftime("%H:%M") %> <%= link_to "編集", edit_study_time_path(@study_time) %><br><br>
           <% end %>
         <% end %>
       </th>
@@ -28,7 +37,7 @@
         <!--学習時間終了-->
         <% @study_time.each do |study_time| %>
           <% if study_time.updated_at.day == c.day %>
-            <%= study_time.updated_at.strftime("%H:%M") %><br><br>
+            <%= study_time.updated_at.strftime("%H:%M") %> <%= link_to "編集", edit_study_time_path(@study_time) %><br><br>
           <% end %>
         <% end %>
       </th>
@@ -44,9 +53,6 @@
             <% end %>
           <% end %>
         <% end %>
-      </th>
-      <th>
-        <%#= link_to "編集", edit_study_time_path(@study_time) %>
       </th>
     </tr>
 <% end %>
