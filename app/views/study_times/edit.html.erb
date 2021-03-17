@@ -1,8 +1,8 @@
 <h1>編集画面</h1>
 <%= form_with model:@study_times, local:true do |f| %>
   <h4>開始時刻</h4>
-  <%= f.text_field :created_at %>
+  <%= f.datetime_select :begin_time, use_month_numbers: true, start_year:Date.today.year %>
   <h4>終了時刻</h4>
-  <%= f.text_field :updated_at %>
+  <%= f.datetime_select :finish_time, use_month_numbers: true, start_year:Date.today.year %>
   <%= f.submit '保存' %>
 <% end %>

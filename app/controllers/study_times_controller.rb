@@ -8,11 +8,12 @@ class StudyTimesController < ApplicationController
   def study_time
     @user = current_user
     @study_time = StudyTime.all
+    #@study_time = StudyTime.page(params[:page]).per(1)
+
   end
 
   def edit
-    @study_time = StudyTime.find(params[:id])
-
+    @study_times = StudyTime.find_by(begin_time: params[:begin_time], finish_time: params[:finish_time])
   end
 
   def new
@@ -33,6 +34,7 @@ class StudyTimesController < ApplicationController
     redirect_to study_times_path
   end
 
+# 打刻の編集
   def update_time
     user = current_user
     study_time = user.study_time

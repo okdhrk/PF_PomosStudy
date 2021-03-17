@@ -56,13 +56,15 @@
         <% end %>
       </th>
       <th>
-        <%= link_to "編集", edit_study_time_path(@study_time) %>
+        <%#= link_to "編集", edit_study_time_path(@study_time) %>
       </th>
       <th>
-        削除
+        <%#= link_to '削除', task_path(@study_time), method: :delete %>
       </th>
     </tr>
 <% end %>
 
 <% end %>
 </table>
+
+<%#= paginate @study_time %>
