@@ -7,11 +7,11 @@
     <%= attachment_image_tag question.user, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
   <% end %>
 
-  <%= question.user.name %>
+  <%= question.user.name %><br>
 
-  <%= question.title %>
+  <%= question.title %><br>
 
-  <%= question.body %>
+  <%= question.body %><br>
 
   <%= link_to "Questionのshow", question_path(question) %>
 
