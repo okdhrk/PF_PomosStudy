@@ -51,9 +51,9 @@ ActiveRecord::Schema.define(version: 2021_03_12_091931) do
   create_table "study_times", force: :cascade do |t|
     t.integer "user_id"
     t.text "memo"
-    t.datetime "begin_time"
-    t.datetime "finish_time"
-    t.integer "total_time"
+    t.datetime "begin_time", null: false
+    t.datetime "finish_time", null: false
+    t.integer "total_time", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

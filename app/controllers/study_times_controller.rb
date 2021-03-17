@@ -8,10 +8,12 @@ class StudyTimesController < ApplicationController
   def study_time
     @user = current_user
     @study_time = StudyTime.all
+    #@study_time = StudyTime.page(params[:page]).per(1)
+
   end
 
   def edit
-    @study_time = StudyTime.find(params[:id])
+    @study_times = StudyTime.find_by(begin_time: params[:begin_time], finish_time: params[:finish_time])
   end
 
   def new
@@ -21,18 +23,23 @@ class StudyTimesController < ApplicationController
     study_time = StudyTime.new(study_time_params)
     study_time.user_id = current_user.id
     study_time.save
-    # if文でfinishtimeが値が入ったら、finishtime-begintimeを実行できる文を
-    
     redirect_to study_times_path
   end
 
+# 打刻
   def update
     user = current_user
     study_time = user.study_times.last
-    # 終了時刻の打刻
-    if study_time.update(study_time_params)
+    study_time.update(study_time_params)
     redirect_to study_times_path
-    end
+  end
+
+# 打刻の編集
+  def update_time
+    user = current_user
+    study_time = user.study_time
+    study_time.update(study_time_params)
+    redirect_to study_times_study_time_path
   end
 
   def destroy

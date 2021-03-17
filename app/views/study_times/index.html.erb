@@ -13,7 +13,7 @@
 
 <!--study_timeの最後のbegin_timeが空じゃない時かつ、study_timeの最後のfinish_timeが空の時、終了ボタンがでてくる-->
 <% elsif @user.study_times.last.begin_time != nil && @user.study_times.last.finish_time == nil %>
-  <%= form_with model: @study_time, url: study_times_path, method: :post, local:true do |f| %>
+  <%= form_with model: @study_time, url: study_time_path(@study_time), method: :patch, local:true do |f| %>
     <%= f.hidden_field :finish_time, value: Time.now %>
     <%= f.submit '終了' %>
   <% end %>
