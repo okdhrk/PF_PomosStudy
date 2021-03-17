@@ -13,7 +13,7 @@ class StudyTimesController < ApplicationController
   end
 
   def edit
-    @study_times = StudyTime.find_by(begin_time: params[:begin_time], finish_time: params[:finish_time])
+    @study_times = StudyTime.(study_time_params)
   end
 
   def new
@@ -30,6 +30,7 @@ class StudyTimesController < ApplicationController
   def update
     user = current_user
     study_time = user.study_times.last
+    study_time.updated_at = Time.now
     study_time.update(study_time_params)
     redirect_to study_times_path
   end
@@ -51,7 +52,11 @@ class StudyTimesController < ApplicationController
 
   private
   def study_time_params
-    params.require(:study_time).permit(:user_id, :memo, :begin_time, :finish_time, :total_time )
+    params.permit(:user_id, :total_time )
+  end
+
+  def study_params
+    params.require(:study_time).permit(:user_id, :created_at, :updated_at)
   end
 
 end

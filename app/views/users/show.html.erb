@@ -20,8 +20,10 @@
                   <% end %>
                   </div>
                 <% end %>
- 
+
 <!--ログインしているユーザーのみ編集可能-->
+<%= @user.user_genre %>
+<br>
 <% if @user == current_user %>
 <%= link_to "Usersのedit", edit_user_path(@user) %>
 <% end %>

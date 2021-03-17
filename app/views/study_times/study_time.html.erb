@@ -1,23 +1,23 @@
 <% today = Date.today%>
-<caption><%= today.strftime('%Y年%m月')%></caption>
 <% @sum = 0 %>
 <% @study_time.each do |study_time| %>
-    <% aa = study_time.finish_time - study_time.begin_time %>
+    <% aa = study_time.updated_at - study_time.created_at %>
     <% ab = (aa / 60 / 60).round(1) %>
     <% @ac = ab.round(1)  %>
     <% @sum = (@sum + @ac) %>
 <% end %>
-<h2>総合計時間：<%= @sum %></h2>
-<%# byebug %>
+<caption>
+  <%= today.strftime('%Y年%m月')%>
+  <%= @sum %>時間学習中
+</caption>
+
 
 <table class="table">
   <tr>
     <th>日付</th>
-    <th>学習開始時間1</th>
-    <th>学習終了時間1</th>
+    <th>学習開始時間</th>
+    <th>学習終了時間</th>
     <th>合計時間</th>
-    <th></th>
-    <th></th>
   </tr>
 <% month = today.strftime('%m')%>
 <% d = today.at_beginning_of_month.at_beginning_of_week %>
@@ -26,40 +26,33 @@
     <tr>
       <th><%= (c.strftime('%m') == month)? c.strftime('%d(%a)'): "  "%></th>
       <th>
-        <!--学習時間開始１-->
+        <!--学習時間開始-->
         <% @study_time.each do |study_time| %>
-          <% if study_time.begin_time.day == c.day %>
-          <%= study_time.begin_time.strftime("%H:%M") %><br>
+          <% if study_time.created_at.day == c.day %>
+            <%= study_time.created_at.strftime("%H:%M") %> <%= link_to "編集", edit_study_time_path(@study_time) %><br><br>
           <% end %>
         <% end %>
       </th>
       <th>
-        <!--学習時間終了１-->
+        <!--学習時間終了-->
         <% @study_time.each do |study_time| %>
-          <% if study_time.finish_time.day == c.day %>
-          <%= study_time.finish_time.strftime("%H:%M") %><br>
+          <% if study_time.updated_at.day == c.day %>
+            <%= study_time.updated_at.strftime("%H:%M") %> <%= link_to "編集", edit_study_time_path(@study_time) %><br><br>
           <% end %>
         <% end %>
       </th>
       <th>
-        <!--学習合計時間-->
+        <!--学習時間合計-->
         <% @study_time.each do |study_time| %>
           <% total_time = 0 %>
           <% if study_time.created_at.strftime("%d").to_i == c.day %>
             <!--finish_timeに時間が登録されているなら表示する-->
-            <% if study_time.finish_time %>
-              <% total_time = (study_time.finish_time - study_time.begin_time + total_time) / 60 / 60 %>
-              <%= total_time.round(1) %><br>
-
+            <% if study_time.updated_at && study_time.updated_at != study_time.created_at %>
+              <% total_time = (study_time.updated_at - study_time.created_at + total_time) / 60 / 60 %>
+              <%= total_time.round(1) %><br><br>
             <% end %>
           <% end %>
         <% end %>
-      </th>
-      <th>
-        <%#= link_to "編集", edit_study_time_path(@study_time) %>
-      </th>
-      <th>
-        <%#= link_to '削除', task_path(@study_time), method: :delete %>
       </th>
     </tr>
 <% end %>
