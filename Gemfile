@@ -89,3 +89,6 @@ gem 'i18n_generators'
 
 # pagenite
 gem 'kaminari','~> 1.2.1'
+
+# 検索機能
+gem 'ransack'

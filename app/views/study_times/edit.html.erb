@@ -1,8 +1,8 @@
 <h1>編集画面</h1>
 <%= form_with model: @study_times, url: update_time_path(@study_times), method: :patch, local:true do |f| %>
   <h4>開始時刻</h4>
-  <%= f.datetime_select :created_at %>
+  <%= f.datetime_select :begin_time %>
   <h4>終了時刻</h4>
-  <%= f.datetime_select :updated_at %>
+  <%= f.datetime_select :finish_time %>
   <%= f.submit '保存' %>
 <% end %>

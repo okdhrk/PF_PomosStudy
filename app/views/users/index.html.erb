@@ -2,7 +2,25 @@
 <p>Find me in app/views/users/index.html.erb</p>
 <div class="container px-5 px-sm-0">
   <div class="row m-5 pl-5">
-    <h1 class="bg-light">ユーザー一覧</h1>
+
+    <h3>ユーザー検索</h3>
+    <br><br>
+    <%= search_form_for @q, url: search_users_path do |f| %>
+      <%= f.label :name_cont, 'ユーザー名' %>
+      <%= f.search_field :name_cont %>
+      <%= f.label :user_genre_cont, 'ユーザージャンル' %>
+      <%= f.submit '検索' %><br><br>
+    <% end %>
+<br><br>
+    <%= search_form_for @q, url: search_users_path do |f| %>
+      <%= f.label :user_genre_eq, 'ユーザージャンル' %>
+      <%= f.radio_button :user_genre_eq, 0 %>学校
+      <%= f.radio_button :user_genre_eq, 1 %>資格
+      <%= f.radio_button :user_genre_eq, 2 %>その他
+      <%= f.submit '検索' %><br><br>
+    <% end %>
+
+
   </div>
 </div>
 <div class="row">
@@ -27,12 +45,11 @@
                 <% end %>
           </tr>
         <tr>
-          <%= user.user_genre %>
           ベストアンサーの数
           <%= link_to "Usersのshow", user_path(user) %><br>
         </tr>
       </thead>
-      <% end %>
+<% end %>
     </table>
   </div>
 </div>

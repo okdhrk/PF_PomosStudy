@@ -1,13 +1,13 @@
 <% today = Date.today%>
 <% @sum = 0 %>
 <% @study_time.each do |study_time| %>
-    <% aa = study_time.updated_at - study_time.created_at %>
-    <% ab = (aa / 60 / 60).round(1) %>
-    <% @ac = ab.round(1)  %>
+    <% aa = study_time.finish_time - study_time.begin_time %>
+    <% ab = (aa / 60 / 60).round(2) %>
+    <% @ac = ab.round(2)  %>
     <% @sum = (@sum + @ac) %>
 <% end %>
 <caption>
-  <%= today.strftime('%Y年%m月')%>
+  <%= today.strftime('%Y年%m月') %>
   <%= @sum %>時間学習中
 </caption>
 
@@ -28,18 +28,20 @@
       <th>
         <!--学習時間開始-->
         <% @study_time.each do |study_time| %>
-          <% if study_time.created_at.day == c.day %>
-            <%= study_time.created_at.strftime("%H:%M") %> <%= link_to "編集", edit_study_time_path(@study_time) %><br><br>
+          <% if study_time.begin_time.day == c.day %>
+            <%= study_time.begin_time.strftime("%H:%M") %><br><br>
           <% end %>
         <% end %>
       </th>
       <th>
         <!--学習時間終了-->
-        <% @study_time.each do |study_time| %>
-          <% if study_time.updated_at.day == c.day %>
-            <%= study_time.updated_at.strftime("%H:%M") %> <%= link_to "編集", edit_study_time_path(@study_time) %><br><br>
+          <% @study_time.each do |study_time| %>
+            <% if study_time.finish_time != nil && study_time.finish_time.day == c.day %>
+              <%= study_time.finish_time.strftime("%H:%M") %>
+              <!--編集-->
+              <%= link_to "編集", edit_study_time_path(study_time) %><br><br>
+            <% end %>
           <% end %>
-        <% end %>
       </th>
       <th>
         <!--学習時間合計-->
@@ -47,9 +49,9 @@
           <% total_time = 0 %>
           <% if study_time.created_at.strftime("%d").to_i == c.day %>
             <!--finish_timeに時間が登録されているなら表示する-->
-            <% if study_time.updated_at && study_time.updated_at != study_time.created_at %>
-              <% total_time = (study_time.updated_at - study_time.created_at + total_time) / 60 / 60 %>
-              <%= total_time.round(1) %><br><br>
+            <% if study_time.begin_time != nil && study_time.finish_time != nil %>
+              <% total_time = (study_time.finish_time - study_time.begin_time) / 60 / 60 %>
+              <%= total_time.round(2) %><br><br>
             <% end %>
           <% end %>
         <% end %>

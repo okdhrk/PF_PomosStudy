@@ -13,7 +13,7 @@ class StudyTimesController < ApplicationController
   end
 
   def edit
-    @study_times = StudyTime.(study_time_params)
+    @study_times = StudyTime.find(params[:id])
   end
 
   def new
@@ -22,6 +22,7 @@ class StudyTimesController < ApplicationController
   def create
     study_time = StudyTime.new(study_time_params)
     study_time.user_id = current_user.id
+    study_time.begin_time = Time.now
     study_time.save
     redirect_to study_times_path
   end
@@ -30,16 +31,15 @@ class StudyTimesController < ApplicationController
   def update
     user = current_user
     study_time = user.study_times.last
-    study_time.updated_at = Time.now
+    study_time.finish_time = Time.now
     study_time.update(study_time_params)
     redirect_to study_times_path
   end
 
 # 打刻の編集
   def update_time
-    user = current_user
-    study_time = user.study_time
-    study_time.update(study_time_params)
+    @study_time = StudyTime.find(params[:id])
+    @study_time.update(study_time_update_patams)
     redirect_to study_times_study_time_path
   end
 
@@ -52,11 +52,11 @@ class StudyTimesController < ApplicationController
 
   private
   def study_time_params
-    params.permit(:user_id, :total_time )
+    params.permit(:user_id, :total_time, :begin_time, :finish_time )
   end
 
-  def study_params
-    params.require(:study_time).permit(:user_id, :created_at, :updated_at)
+  def study_time_update_patams
+    params.require(:study_time).permit(:begin_time, :finish_time )
   end
 
 end
