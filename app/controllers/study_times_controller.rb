@@ -10,6 +10,17 @@ class StudyTimesController < ApplicationController
     @study_time = StudyTime.all
     #@study_time = StudyTime.page(params[:page]).per(1)
 
+    # 月毎にページを切り替える
+    @year = []
+    (-12..0).each do |month|
+      @month = []
+      @day = (month.month.from_now.beginning_of_month.to_date)
+      @month = (@day..@day.end_of_month.to_date)
+
+      @year.unshift(@month)
+    end
+    @year = Kaminari.paginate_array(@year).page(params[:page]).per(1)
+
   end
 
   def edit

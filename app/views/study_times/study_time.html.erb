@@ -1,16 +1,18 @@
-<% today = Date.today%>
 <% @sum = 0 %>
-<% @study_time.each do |study_time| %>
-    <% aa = study_time.finish_time - study_time.begin_time %>
-    <% ab = (aa / 60 / 60).round(2) %>
-    <% @ac = ab.round(2)  %>
-    <% @sum = (@sum + @ac) %>
+<% @year.each do |month| %>
+  <% month.each do |day| %>
+    <% @study_time.each do |study_time| %>
+    <% if study_time.begin_time.to_date == day.to_date && study_time.finish_time.to_date == day.to_date %>
+      <% aa =  (study_time.finish_time - study_time.begin_time) / 60 / 60 %>
+      <% @ac = aa.round(2)  %>
+      <% @sum = (@sum + @ac) %>
+    <% end %>
+    <% end %>
+    <% @ym = day.strftime('%Y年%m月') %>
+  <% end %>
 <% end %>
-<caption>
-  <%= today.strftime('%Y年%m月') %>
-  <%= @sum %>時間学習中
-</caption>
-
+<h1><%= @ym %></h1><br>
+今月の総学習時間<%= @sum %>
 
 <table class="table">
   <tr>
@@ -19,47 +21,42 @@
     <th>学習終了時間</th>
     <th>合計時間</th>
   </tr>
-<% month = today.strftime('%m')%>
-<% d = today.at_beginning_of_month.at_beginning_of_week %>
-<% 1.upto(1).each do|i|%>
-<% (d..d.end_of_month).each do|c|%>
+  <% @year.each do |month| %>
+    <% month.each do |day| %>
     <tr>
-      <th><%= (c.strftime('%m') == month)? c.strftime('%d(%a)'): "  "%></th>
+      <th><%= day.strftime('%d日(%a)') %></th>
       <th>
-        <!--学習時間開始-->
+        <!--学習開始-->
         <% @study_time.each do |study_time| %>
-          <% if study_time.begin_time.day == c.day %>
+          <% if study_time.begin_time.to_date == day.to_date %>
             <%= study_time.begin_time.strftime("%H:%M") %><br><br>
           <% end %>
         <% end %>
       </th>
       <th>
-        <!--学習時間終了-->
-          <% @study_time.each do |study_time| %>
-            <% if study_time.finish_time != nil && study_time.finish_time.day == c.day %>
-              <%= study_time.finish_time.strftime("%H:%M") %>
-              <!--編集-->
-              <%= link_to "編集", edit_study_time_path(study_time) %><br><br>
-            <% end %>
+        <!--学習終了-->
+        <% @study_time.each do |study_time| %>
+          <% if  study_time.finish_time.day != nil && study_time.finish_time.to_date == day.to_date %>
+            <%= study_time.finish_time.strftime("%H:%M") %>
+            <%= link_to "編集", edit_study_time_path(study_time) %><br><br>
           <% end %>
+        <% end %>
       </th>
       <th>
         <!--学習時間合計-->
         <% @study_time.each do |study_time| %>
           <% total_time = 0 %>
-          <% if study_time.created_at.strftime("%d").to_i == c.day %>
-            <!--finish_timeに時間が登録されているなら表示する-->
-            <% if study_time.begin_time != nil && study_time.finish_time != nil %>
-              <% total_time = (study_time.finish_time - study_time.begin_time) / 60 / 60 %>
-              <%= total_time.round(2) %><br><br>
+            <% if study_time.created_at.strftime("%d").to_i == day.day %>
+              <% if study_time.finish_time.day != nil && study_time.finish_time.to_date == day.to_date %>
+                <% total_time = (study_time.finish_time - study_time.begin_time) / 60 / 60 %>
+                <%= total_time.round(2) %><br><br>
+              <% end %>
             <% end %>
-          <% end %>
         <% end %>
       </th>
     </tr>
-<% end %>
-
-<% end %>
+    <% end %>
+  <% end %>
 </table>
 
-<%#= paginate @study_time %>
+  <%= paginate @year %>
