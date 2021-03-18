@@ -1,1 +1,9 @@
-<%= image_tag 'logo.png', :size =>'80x80' %>
+<header><%#= render 'homes/header' %></header>
+<div class="container">
+  <div class="row mx-auto">
+    <div class="col text-center">
+      <div><%= image_tag 'logo.png', :size =>'80x80' %></div>
+      <div><%= link_to "新規登録", new_user_registration_path %></div>
+    </div>
+  </div>
+</div>
