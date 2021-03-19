@@ -42,3 +42,4 @@ https://docs.google.com/spreadsheets/d/1zad_6SejdDI8-3nuQs_cqHUrW3rHijGM2gzJfV3x
 - DesignEvo ( https://www.designevo.com/logo-maker/ )
 - ICOOON MONO ( https://icooon-mono.com/ )
 - O-DAN ( https://o-dan.net/ja/ )
+- Font Awesome ( https://fontawesome.com/ )
