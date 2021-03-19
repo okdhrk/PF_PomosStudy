@@ -3,8 +3,6 @@
 
 <h2><%= link_to "学習時間一覧", study_times_study_time_path %></h2>
 
-
-
 <% if @user.study_times.empty? %>
   <%= form_with model: @study_time, url: study_times_path, method: :post, local:true do |f| %>
     <%= f.submit '開始' %>
@@ -19,7 +17,7 @@
 <!--updateの最後のレコードがcreateの最後のレコードと値が同じだったら表示-->
 <% elsif @user.study_times.last.updated_at == @user.study_times.last.created_at %>
   <%= form_with model: @study_time, url: study_time_path(@study_time), method: :patch, local:true do |f| %>
-    <%= f.hidden_field :updated_at, value: @study_time %>
+    <%= f.hidden_field :begin_time, value: @study_time %>
     <%= f.submit '終了' %>
   <% end %>
 <% end %>

@@ -2,13 +2,12 @@ class StudyTimesController < ApplicationController
 
   def index
     @user = current_user
-    @study_time = StudyTime.all
+    @study_time = current_user.study_times.last
   end
 
   def study_time
     @user = current_user
-    @study_time = StudyTime.all
-    #@study_time = StudyTime.page(params[:page]).per(1)
+    @study_time = current_user.study_times
 
     # 月毎にページを切り替える
     @year = []
@@ -33,7 +32,7 @@ class StudyTimesController < ApplicationController
   def create
     study_time = StudyTime.new(study_time_params)
     study_time.user_id = current_user.id
-    study_time.begin_time = Time.now
+    study_time.begin_time = Time.current
     study_time.save
     redirect_to study_times_path
   end
@@ -42,15 +41,40 @@ class StudyTimesController < ApplicationController
   def update
     user = current_user
     study_time = user.study_times.last
-    study_time.finish_time = Time.now
-    study_time.update(study_time_params)
-    redirect_to study_times_path
+    if study_time.begin_time.to_date == Time.current.to_date
+      study_time.finish_time = Time.current
+      study_time.update(study_time_params)
+      redirect_to study_times_path
+    else
+      # begin_timeと同じ日にちの23:59がfinish_timeにupdateされる
+      a = study_time.begin_time.to_date
+      ye = a.year
+      mo = a.month
+      da = a.day
+      start_time = Time.new(ya, mo, da, 23, 59, 0)
+      study_time = study_time.finish_time.to_date
+      study_time = start_time
+      study_time.update(study_time_params)
+
+      # begin_timeの次の日にちの00:00がnewしてbegin_timeにcreateされる
+      study_time = StudyTime.new(study_time_params)
+      end_time = Time.new(ya, mo, da + 1, 00, 00, 0)
+      study_time = study_time.begin_time.to_date
+      study_time = end_time
+      study_time.create(study_time_params)
+
+      # 打刻した時間
+      study_time.finish_time = Time.current
+      study_time.update(study_time_params)
+      redirect_to study_times_path
+    end
   end
 
 # 打刻の編集
   def update_time
+    @study_time = current_user
     @study_time = StudyTime.find(params[:id])
-    @study_time.update(study_time_update_patams)
+    @study_time.update(study_time_update_params)
     redirect_to study_times_study_time_path
   end
 
@@ -66,7 +90,7 @@ class StudyTimesController < ApplicationController
     params.permit(:user_id, :total_time, :begin_time, :finish_time )
   end
 
-  def study_time_update_patams
+  def study_time_update_params
     params.require(:study_time).permit(:begin_time, :finish_time )
   end
 
