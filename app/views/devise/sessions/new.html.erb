@@ -1,26 +1,34 @@
-<h2>Log in</h2>
-
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
-
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+<%= render 'homes/header' %>
+<div class="container pt-3">
+  <div class="row mx-auto mt-1">
+    <div class="col-5 mx-auto text-center bg-white" style="width:1%;">
+      <h2 class="mt-2">ログイン</h2>
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <div class="field">
+          <%= f.email_field :email, size:"30", :placeholder => 'メールアドレス', :class => "col-form-label-lg", autofocus: true, autocomplete: "email" %>
+        </div><br>
+        <div class="field">
+          <%= f.password_field :password, size:"30", :placeholder => 'パスワード(6文字以上)', :class => "col-form-label-lg", autocomplete: "current-password" %>
+        </div><br>
+        <div class="actions">
+          <%= f.submit "ログイン", class: "btn btn-success btn-lg" %>
+        </div><br>
+      <% end %>
+      <div>
+        <%- resource_class.omniauth_providers.each do |provider| %>
+          <%= link_to omniauth_authorize_path(resource_name, provider), class: "btn btn-primary btn-lg" do %>
+          <i class="fab fa-google"></i>oogleでログイン
+          <% end %>
+        <% end %>
+      </div><br>
+      <div class="mb-5">アカウントを登録せずにログインする<br>
+        <%= link_to "ゲストログイン", homes_guest_sign_in_path, method: :post, class: "btn btn-warning btn-lg" %>
+      </div>
+      <div class="mb-5">
+        
+      </div>
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
   </div>
-<% end %>
+</div>
 
 <%= render "devise/shared/links" %>

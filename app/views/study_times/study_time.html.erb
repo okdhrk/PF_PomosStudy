@@ -2,9 +2,8 @@
 <% @year.each do |month| %>
   <% month.each do |day| %>
     <% @study_time.each do |study_time| %>
-    <% if study_time.begin_time.to_date == day.to_date && study_time.finish_time.to_date == day.to_date %>
-      <% aa =  (study_time.finish_time - study_time.begin_time) / 60 / 60 %>
-      <% @ac = aa.round(2)  %>
+    <% if study_time.is_same_month(day.month) %>
+      <% @ac = study_time.total_time %>
       <% @sum = (@sum + @ac) %>
     <% end %>
     <% end %>
@@ -37,7 +36,7 @@
       <th>
         <!--学習終了-->
         <% @study_time.each do |study_time| %>
-          <% if  study_time.finish_time.day != nil && study_time.finish_time.to_date == day.to_date %>
+          <% if  study_time.is_same_month(day.month) %>
             <%= study_time.finish_time.strftime("%H:%M") %>
             <%= link_to "編集", edit_study_time_path(study_time) %><br><br>
           <% end %>
@@ -48,7 +47,7 @@
         <% @study_time.each do |study_time| %>
           <% total_time = 0 %>
             <% if study_time.created_at.strftime("%d").to_i == day.day %>
-              <% if study_time.finish_time.day != nil && study_time.finish_time.to_date == day.to_date %>
+              <% if study_time.is_same_month(day.month) %>
                 <% total_time = (study_time.finish_time - study_time.begin_time) / 60 / 60 %>
                 <%= total_time.round(1) %><br><br>
               <% end %>
@@ -60,4 +59,4 @@
   <% end %>
 </table>
 
-  <%= paginate @year %>
+<%= paginate @year %>

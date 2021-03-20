@@ -48,7 +48,7 @@ class StudyTimesController < ApplicationController
     else
       # begin_timeと同じ日にちの23:59がfinish_timeにupdateされる
       a = study_time.begin_time.to_date
-      ye = a.year
+      ya = a.year
       mo = a.month
       da = a.day
       start_time = Time.new(ya, mo, da, 23, 59, 0)
@@ -61,7 +61,7 @@ class StudyTimesController < ApplicationController
       end_time = Time.new(ya, mo, da + 1, 00, 00, 0)
       study_time = study_time.begin_time.to_date
       study_time = end_time
-      study_time.create(study_time_params)
+      study_time.save(study_time_params)
 
       # 打刻した時間
       study_time.finish_time = Time.current

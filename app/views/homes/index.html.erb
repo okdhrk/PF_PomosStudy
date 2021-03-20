@@ -1,19 +1,19 @@
 <%= render 'homes/header' %>
-  <div class="container pt-5">
-    <div class="row mx-auto mt-5">
-      <div class="col"></div>
-      <div class="col-md-5 text-center">
-        <div><%= image_tag 'logo.png', width: '60%', height: '60%' %></div>
-          <div class="btn btn-lg btn-danger">
-            <%= link_to "新規登録", new_user_registration_path, class: "text-white" %>
-          </div>
-          <div class="btn btn-lg btn-danger">
-            <%= link_to "ログイン", new_user_session_path, class: "text-white" %>
-          </div><br><br>
-          <div class="btn btn-lg btn-success mb-5">
-            <%= link_to 'ゲストログイン（閲覧用）', homes_guest_sign_in_path, method: :post, class: "text-white" %>
-          </div>
-      </div>
-      <div class="col"></div>
+<div class="container pt-1">
+  <div class="row mx-auto mt-1">
+    <div class="col"></div>
+    <div class="col-md-5 text-center">
+      <div><%= image_tag 'logo.png', width: '60%', height: '60%' %></div>
+        <div class="btn btn-lg btn-danger">
+          <%= link_to "新規登録", new_user_registration_path, class: "text-white" %>
+        </div>
+        <div class="btn btn-lg btn-danger">
+          <%= link_to "ログイン", new_user_session_path, class: "text-white" %>
+        </div><br><br>
+        <div class="btn btn-lg btn-success mb-5">
+          <%= link_to 'ゲストログイン（閲覧用）', homes_guest_sign_in_path, method: :post, class: "text-white" %>
+        </div>
     </div>
+    <div class="col"></div>
   </div>
+</div>
