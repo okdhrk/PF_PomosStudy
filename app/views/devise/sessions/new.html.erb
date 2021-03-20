@@ -24,11 +24,9 @@
       <div class="mb-5">アカウントを登録せずにログインする<br>
         <%= link_to "ゲストログイン", homes_guest_sign_in_path, method: :post, class: "btn btn-warning btn-lg" %>
       </div>
-      <div class="mb-5">
-        
+      <div class="mb-5">アカウントをお持ちでない方<br>
+        <%= link_to "新規登録", new_registration_path(resource_name), class: "btn btn-danger btn-sm" %>
       </div>
     </div>
   </div>
 </div>
-
-<%= render "devise/shared/links" %>

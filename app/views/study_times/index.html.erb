@@ -17,7 +17,6 @@
 <!--updateの最後のレコードがcreateの最後のレコードと値が同じだったら表示-->
 <% elsif @user.study_times.last.updated_at == @user.study_times.last.created_at %>
   <%= form_with model: @study_time, url: study_time_path(@study_time), method: :patch, local:true do |f| %>
-    <%= f.hidden_field :begin_time, value: @study_time %>
     <%= f.submit '終了' %>
   <% end %>
 <% end %>
