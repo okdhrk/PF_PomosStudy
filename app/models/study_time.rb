@@ -16,4 +16,5 @@ class StudyTime < ApplicationRecord
     return (bt && ft) && (bt.month == month && ft.month == month)
   end
 
+
 end
