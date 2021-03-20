@@ -16,3 +16,8 @@
 // Custom bootstrap variables must be set or imported *before* bootstrap.
 @import "bootstrap";
 
+body {
+  font-family: klee;
+  background: image-url(table-2879213_1920) no-repeat;
+  background-size: 100% auto;
+}

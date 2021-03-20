@@ -1,44 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>PomoSStudy</title>
+    <title>Pomo'sStudy</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <script src="https://kit.fontawesome.com/d499b29384.js" crossorigin="anonymous"></script>
+
   </head>
 
   <body>
-    <header>
-      <nav class="navbar navbar-expand-lg navbar-light light">
-        <div class="container">
-          <span>
-            <%= link_to root_path, class: "navbar-brand" do %>
-              <%= image_tag 'logo.png', :size =>'100x100' %>
-            <% end %>
-          </span>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="navbar-collapse collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav ml-auto">
-              <% if user_signed_in? %>
-
-              <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></li>
-
-              <% else %>
-
-              <li><%= link_to "新規登録", new_user_registration_path %></li>
-              <li><%= link_to "ログイン", new_user_session_path %></li>
-              <li><%= link_to 'ゲストログイン（閲覧用）', homes_guest_sign_in_path, method: :post %></li>
-
-              <% end %>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </header>
     <%= yield %>
   </body>
+
 </html>

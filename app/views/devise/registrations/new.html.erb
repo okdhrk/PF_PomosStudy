@@ -1,34 +1,39 @@
-<h2>Sign up</h2>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autofocus: true %>
+<%= render 'homes/header' %>
+<div class="container pt-3">
+  <div class="row mx-auto mt-1">
+    <div class="col-5 mx-auto text-center bg-white" style="width:1%;">
+      <h2 class="mt-2">新規登録</h2>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
+        <div class="field">
+          <%= f.text_field :name, size:"30", :placeholder => 'お名前', :class => "col-form-label-lg", autofocus: true %>
+        </div><br>
+        <div class="field">
+          <%= f.email_field :email, size:"30", :placeholder => 'メールアドレス', :class => "col-form-label-lg", autofocus: true, autocomplete: "email" %>
+        </div><br>
+        <div class="field">
+          <%= f.password_field :password, size:"30", :placeholder => 'パスワード(6文字以上)', :class => "col-form-label-lg", autocomplete: "new-password" %>
+        </div><br>
+        <div class="field">
+          <%= f.password_field :password_confirmation, size:"30", :placeholder => 'パスワード(確認用)', :class => "col-form-label-lg", autocomplete: "new-password" %>
+        </div><br>
+        <div class="actions">
+          <%= f.submit "アカウント作成", class: "btn btn-danger btn-lg" %>
+        </div>
+      <% end %><br>
+      <div>
+        <%- resource_class.omniauth_providers.each do |provider| %>
+          <%= link_to omniauth_authorize_path(resource_name, provider), class: "btn btn-primary btn-lg" do %>
+          <i class="fab fa-google"></i>oogleでログイン
+          <% end %>
+        <% end %>
+      </div><br>
+      <div class="mb-3">既にアカウントをお持ちの方<br>
+        <%= link_to "ログイン", new_session_path(resource_name), class: "btn btn-success" %>
+      </div>
+    </div>
   </div>
+</div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>

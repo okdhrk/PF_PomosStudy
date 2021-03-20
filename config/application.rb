@@ -12,7 +12,6 @@ module PomoSStudy
     config.active_record.default_timezone = :local
 
     #　以下の記述を追記する(設定必須)
-    # デフォルトのlocaleを日本語(:ja)にする
     config.i18n.default_locale = :ja
   end
 end
