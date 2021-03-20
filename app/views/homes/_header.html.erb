@@ -1,13 +1,27 @@
 <header>
   <nav class="navbar navbar-expand-lg navbar-light bg-white p-4" style="opacity:0.8;">
-    <div class="container mr-0">
+    <div class="container mr-1">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="navbar-collapse collapse" id="navbarNavDropdown">
         <ul class="navbar-nav ml-auto">
-          <li><%= link_to "Pomo's Studyの使い方", homes_about_path, class: "text-danger" %></li>
-          <li><%= link_to "お問い合わせ", inquiry_path, class: "ml-4 text-danger" %></li>
+          <% if user_signed_in? %>
+            <li class="ml-2">
+              <%= link_to user_path(user), class: "text-danger fas fa-user-circle" do %>
+                <%= current_user.name %>さんのマイページ
+              <% end %>
+            </li>
+            <li class="ml-2"><%= link_to "タイマー", root_path, class: "text-danger fas fa-stopwatch" %></li>
+            <li class="ml-2"><%= link_to "学習時間", study_times_path, class: "text-danger fas fa-chalkboard-teacher" %></li>
+            <li class="ml-2"><%= link_to "質問掲示板", questions_path, class: "text-danger fas fa-comment-alt" %></li>
+            <li class="ml-2"><%= link_to "お問い合わせ", inquiry_path, class: "text-danger fas fa-paper-plane" %></li>
+            <li class="ml-2"><%= link_to "使い方", homes_about_path, class: "text-danger fas fa-question-circle" %></li>
+            <li class="ml-2"><%= link_to "ログアウト", destroy_user_session_path, class: "fas fa-sign-out-alt text-success", method: :delete %></li>
+          <% else %>
+            <li><%= link_to "Pomo's Studyの使い方", homes_about_path, class: "text-danger fas fa-question-circle" %></li>
+            <li><%= link_to " お問い合わせ", inquiry_path, class: "ml-4 text-danger fas fa-paper-plane" %></li>
+          <% end %>
         </ul>
       </div>
     </div>

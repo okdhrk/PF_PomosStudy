@@ -1,0 +1,74 @@
+<head>
+ <meta charset="UTF-8">
+ <title>3minTimer</title>
+ <link rel="stylesheet" href="main.css">
+ </head>
+ <body>
+ <div id="timer">
+ <h1>25minTimer</h1>
+ <p>
+ <span id="min">25</span> m
+ <span id="sec">0</span> s
+ </p>
+ <p>
+ <input type="button" id="start" value="START">
+ <input type="button" id="stop" value="STOP" disabled>
+ <input type="button" id="reset" value="RESET">
+ </p>
+ </div>
+ </body>
+</html>
+
+<script>
+
+  window.onload = function(){
+}
+ var time = 1500;
+ var counter;
+ var min = document.getElementById("min");
+ var sec = document.getElementById("sec");
+ var start = document.getElementById("start");
+ var stop = document.getElementById("stop");
+ var reset = document.getElementById("reset");
+
+ start.onclick = function() {
+toggle();
+counter = setInterval( count, 1000 );
+}
+
+stop.onclick = function() {
+toggle();
+clearInterval( counter );
+}
+
+reset.onclick = function() {
+time = 1500;
+sec.innerHTML = time % 60;
+min.innerHTML = Math.floor( time / 60 );
+}
+
+function toggle() {
+ if( start.disabled ) {
+  start.disabled = false;
+  stop.disabled = true;
+} else {
+  start.disabled = true
+  stop.disabled = false;
+  }
+}
+
+ function count() {
+ if( time === 0 ) {
+ sec.innerHTML = 0;
+ min.innerHTML = 0;
+ toggle();
+ alert("25分経過しました。");
+ clearInterval( counter );
+ } else {
+ time -= 1;
+ sec.innerHTML = time % 60;
+ min.innerHTML = Math.floor( time / 60 );
+ }
+ }
+
+</script>
