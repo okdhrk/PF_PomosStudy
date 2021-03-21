@@ -23,6 +23,7 @@ class StudyTimesController < ApplicationController
   end
 
   def edit
+    @user = current_user
     @study_times = StudyTime.find(params[:id])
   end
 
