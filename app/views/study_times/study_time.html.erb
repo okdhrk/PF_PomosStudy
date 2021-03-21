@@ -1,69 +1,82 @@
-<% @year.each do |month| %>
-  <% month.each do |day| %>
-    <% @study_time.each do |study_time| %>
-    <% if study_time.is_same_month(day.month) %>
-      <% @ac = study_time.total_time %>
-    <% end %>
-    <% end %>
-    <% @ym = day.strftime('%Y年%m月') %>
-  <% end %>
-<% end %>
-<h1><%= @ym %></h1><br>
-今月の総学習時間:<%= @ac %>
+<%= render 'layouts/header', user: @user %>
+<div class="container pt-3">
+  <div class="row mx-auto mt-1">
+    <div class="col-10 mx-auto bg-white" style="width:1%;">
+      <h2 class="mt-2 pb-1 text-center">学習時間一覧</h2>
+      <% @year.each do |month| %>
+        <% month.each do |day| %>
+          <% @study_time.each do |study_time| %>
+          <% if study_time.is_same_month(day.month) %>
+            <% @ac = study_time.total_time %>
+          <% end %>
+          <% end %>
+          <% @ym = day.strftime('%Y年%m月') %>
+        <% end %>
+      <% end %>
+      <h1><%= @ym %></h1>
+      <i class="fas fa-user-clock"></i>今月の総学習時間:<%= @ac %>
+      <div class="text-center"><%= paginate @year, class: "text-center" %></div>
+      <table class="table table-bordered text-center table-sm">
+        <tr class="thead-dark">
+          <th class="fixed01">日付</th>
+          <th class="fixed01">学習開始時間</th>
+          <th class="fixed01">学習終了時間</th>
+          <th class="fixed01"</th>
+          <th class="fixed01">合計時間(/時間)</th>
+        </tr>
+        <% @year.each do |month| %>
+          <% month.each do |day| %>
+          <tr>
+            <th><%= day.strftime('%d日(%a)') %></th>
+            <th>
+              <!--学習開始-->
+              <% @study_time.each do |study_time| %>
+                <% if study_time.begin_time.to_date == day.to_date %>
+                  <%= study_time.begin_time.strftime("%H:%M") %><br><br>
+                <% end %>
+              <% end %>
+            </th>
+            <th>
+              <!--学習終了-->
+              <% @study_time.each do |study_time| %>
+                <% if (study_time.finish_time != nil) && (study_time.study_day == day.to_date) %>
+                  <%= study_time.finish_time.strftime("%H:%M") %>
+                  <!--日付を跨いだ時日付を表示-->
+                  <% if study_time.study_day != study_time.finish_time.to_date %>
+                    <%= study_time.finish_time.strftime('(%d日)') %>
+                  <% end %>
+                  <br><br>
+                <% end %>
+              <% end %>
+            </th>
+            <th>
+              <% @study_time.each do |study_time| %>
+                <% if (study_time.finish_time != nil) && (study_time.study_day == day.to_date) %>
+                    <%= link_to "編集", edit_study_time_path(study_time) %><br>
+                  <br>
+                <% end %>
+              <% end %>
+            </th>
+            <th>
+              <!--学習時間合計-->
+              <% @study_time.each do |study_time| %>
+                <% if (study_time.finish_time != nil) && (study_time.study_day == day.to_date) %>
+                    <%= study_time.total_time %><br>
+                  <br>
+                <% end %>
+              <% end %>
+            </th>
+            </tr>
+          <% end %>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>
 
 
-<table class="table">
-  <tr>
-    <th>日付</th>
-    <th>学習開始時間</th>
-    <th>学習終了時間</th>
-    <th></th>
-    <th>合計時間</th>
-  </tr>
-  <% @year.each do |month| %>
-    <% month.each do |day| %>
-    <tr>
-      <th><%= day.strftime('%d日(%a)') %></th>
-      <th>
-        <!--学習開始-->
-        <% @study_time.each do |study_time| %>
-          <% if study_time.begin_time.to_date == day.to_date %>
-            <%= study_time.begin_time.strftime("%H:%M") %><br><br>
-          <% end %>
-        <% end %>
-      </th>
-      <th>
-        <!--学習終了-->
-        <% @study_time.each do |study_time| %>
-          <% if (study_time.finish_time != nil) && (study_time.study_day == day.to_date) %>
-            <%= study_time.finish_time.strftime("%H:%M") %>
-            <!--日付を跨いだ時日付を表示-->
-            <% if study_time.study_day != study_time.finish_time.to_date %>
-              <%= study_time.finish_time.strftime('(%d日)') %>
-            <% end %>
-            <br><br>
-          <% end %>
-        <% end %>
-      </th>
-      <th>
-        <% @study_time.each do |study_time| %>
-          <% if (study_time.finish_time != nil) && (study_time.study_day == day.to_date) %>
-              <%= link_to "編集", edit_study_time_path(study_time) %><br>
-            <br>
-          <% end %>
-        <% end %>
-      </th>
-      <th>
-        <!--学習時間合計-->
-        <% @study_time.each do |study_time| %>
-          <% if (study_time.finish_time != nil) && (study_time.study_day == day.to_date) %>
-              <%= study_time.total_time %><br>
-            <br>
-          <% end %>
-        <% end %>
-      </th>
-      </tr>
-    <% end %>
-  <% end %>
-</table>
-<%= paginate @year %>
+
+
+
+
+

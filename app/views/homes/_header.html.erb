@@ -1,6 +1,9 @@
 <header>
   <nav class="navbar navbar-expand-lg navbar-light bg-white p-4" style="opacity:0.8;">
     <div class="container mr-1">
+      <span style="font-family: AcademyEngravedLetPlain">
+        <%= link_to "Pomo's Study", root_path, class: "h2 text-dark" %>
+      </span>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -12,7 +15,7 @@
                 <%= current_user.name %>さんのマイページ
               <% end %>
             </li>
-            <li class="ml-2"><%= link_to "タイマー", root_path, class: "text-danger fas fa-stopwatch" %></li>
+            <li class="ml-2"><%= link_to "タイマー", pomo_timer_long_time_path, class: "text-danger fas fa-stopwatch" %></li>
             <li class="ml-2"><%= link_to "学習時間", study_times_path, class: "text-danger fas fa-chalkboard-teacher" %></li>
             <li class="ml-2"><%= link_to "質問掲示板", questions_path, class: "text-danger fas fa-comment-alt" %></li>
             <li class="ml-2"><%= link_to "お問い合わせ", inquiry_path, class: "text-danger fas fa-paper-plane" %></li>
