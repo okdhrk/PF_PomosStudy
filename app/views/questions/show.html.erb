@@ -1,69 +1,95 @@
-<h1>Questions#show</h1>
-<p>Find me in app/views/questions/show.html.erb</p>
-
-<%= link_to user_path(@question.user.id) do %>
-<%= attachment_image_tag @question.user, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
-<% end %>
-<%= @question.user.name %>
-<%= @question.title %>
-<%= @question.body %>
-
-<!--解決ボタン-->
-<% if @question.is_solved == false %>
-<% if current_user.id == @question.user_id %>
-  <%= form_with(model: @question, local: true ) do |f| %>
-    <%= f.check_box :is_solved, autofocus: true %>
-    <%= f.submit "解決済み" %>
-  <% end %>
-<% end %>
-<% end %>
-
-<% if current_user.id == @question.user_id %>
-  <%= link_to_unless @question.best_answer_id, 'questionのedi', edit_question_path(@question) %>
-<% end %>
-
-<!--コメント作成フォーム-->
-<% if @question.is_solved == false %>
-  <%= form_with(model:[@question, @answer], local: true ) do |f| %>
-  <%= f.text_area :body, rows:'5', cols:'80' %>
-  <%= f.submit "送信" %>
-  <% end %>
-<% end %>
-
-<!--コメント一覧-->
-<% @question.answers.each do |answer| %>
-  <tr>
-    <td>
-      <%= attachment_image_tag answer.user, :image, :fill, 60, 60, fallback: "no_image.jpg" %><br>
-      <%= answer.user.name %>
-    </td>
-    <td>
-      <div class="card-body  <%= "best-answer" if @question.best_answer_id == answer.id %>">
-      <%= answer.body %>
+<%= render 'layouts/header', user: @user %>
+<div class="container pt-3 pb-3">
+  <div class="row mx-auto mt-1">
+    <div class="col-10 mx-auto bg-white" style="width:1%;">
+      <div class="pt-3 text-right">
+        <%= link_to "質問一覧に戻る", questions_path, class: "fas fa-undo-alt text-success" %>
       </div>
-    </td>
 
-    <td>
-        <% if answer.user == current_user %>
-  <div class="comment-delete">
-    <%= link_to_unless @question.best_answer_id, 'answer削除', edit_question_path(@question) %>
-  </div>
+      <!--質問した人の情報-->
+      <table class="table">
+        <tr>
+          <th style="width:10%">
+            <%= attachment_image_tag @question.user, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
+          </th>
+          </th>
+          <th class="align-middle", style="width:15%">
+            <%= @question.user.name %>さん <%= @question.created_at.strftime('%m/%d %H:%M') %>
+          </th>
+          <th  class="align-bottom",style="width:55%">
+              <!--解決済みボタン-->
+              <% if @question.is_solved == false %>
+                <% if current_user.id == @question.user_id %>
+                  <%= form_with(model: @question, url: questions_path, method: :post, local: true ) do |f| %>
+                    <%= f.check_box :is_solved, autofocus: true %>
+                    <%= f.submit "解決済みにする", class: "btn btn-danger btn-sm", "data-confirm" => "この質問を解決済みにしてよろしいですか？" %>
+                  <% end %>
+                <% end %>
+              <% end %>
+          </th>
+        </tr>
+
+      </table>
+
+      <!--質問内容-->
+      <table class="table mt-4">
+        <tr>
+          <th>
+            <u class="h3 fas"><%= @question.title %></u>
+            <div class="pt-2"><%= @question.body %></div>
+            <!--質問編集、削除ボタン-->
+            <div class="pt-3 text-right">
+              <% if current_user.id == @question.user_id %>
+               <%= link_to_unless @question.best_answer_id, '質問を編集する', edit_question_path(@question), class: "btn btn-success btn-sm" %>
+               <%= link_to "", question_path(@question), method: :delete, "data-confirm" => "質問を削除しますか？" , class: "fas fa-trash-alt btn btn-danger btn-sms" %>
+              <% end %>
+            </div>
+          </th>
+        </tr>
+        <!--解答一覧-->
+        <% @question.answers.each do |answer| %>
+        <tr>
+          <th style="width:10%">
+            <%= attachment_image_tag answer.user, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
+            <%= answer.user.name %>さん (<%= answer.created_at.strftime('%m/%d %H:%M') %>)
+            <% if answer.user == current_user %>
+              <span class="pl-3">
+                <%= link_to "", question_path(@question), method: :delete, "data-confirm" => "質問を削除しますか？" , class: "fas fa-trash-alt btn btn-danger btn-sms" %>
+              </span>
+            <% end %>
+
+            <!--回答内容-->
+            <div class="card-body  <%= "best-answer" if @question.best_answer_id == answer.id %>">
+              <%= answer.body %>
+            </div>
+
+            <!--ベストアンサーボタン-->
+            <div class="text-right">
+              <div class="ba-child">
+                <%= form_with(model: @question, local: true, data: {confirm: "#{answer.user.name}さんの回答をベストアンサーにします。この修正は変更できませんが、よろしいですか？"}) do |f| %>
+                  <%= f.hidden_field :best_answer_id, value: @answer %>
+                  <%= f.submit 'ベストアンサー', disabled: @question.best_answer_id.present?, class: "btn btn-danger" %>
+                <% end %>
+              </div>
+            </div>
+          </th>
+        </tr>
         <% end %>
-    </td>
-  </tr>
-
-  <!--ベストアンサーボタン-->
-<div class="ba-child text-center">
-          <%= form_with(model: @question, local: true, data: {confirm: "#{answer.user.name}さんの回答をベストアンサーにします。この修正は変更できませんが、よろしいですか？"}) do |f| %>
-            <%= f.hidden_field :best_answer_id, value: @answer %>
-              <%= f.submit 'BA', disabled: @question.best_answer_id.present? %>
-          <% end %>
+        <!--回答フォーム-->
+        <tr>
+          <th>
+            <div class="h4"><i class="fas fa-check"></i>回答はこちらから</div>
+            <% if @question.is_solved == false %>
+              <%= form_with(model:[@question, @answer], local: true ) do |f| %>
+              <%= f.text_area :body, rows:'5', cols:'100' %>
+              <%= f.submit "回答する", class: "btn btn-primary" %>
+              <% end %>
+            <% end %>
+          </th>
+        </tr>
+      </table>
+    </div>
+  </div>
 </div>
 
-<% end %>
-
-
-<% if current_user.id == @question.user_id %>
-  <%= link_to_unless @question.best_answer_id, 'question削除', question_path(@question), method: :delete %>
-<% end %>
 

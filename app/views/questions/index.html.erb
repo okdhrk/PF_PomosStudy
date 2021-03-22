@@ -1,35 +1,51 @@
-<h1>Questions#index</h1>
-<p>Find me in app/views/questions/index.html.erb</p>
-
-<%= search_form_for @q, url: search_questions_path do |f| %>
-  <%= f.label :title_cont, '質問タイトル' %>
-  <%= f.search_field :title_cont %>
-  <br>
-  <%= f.submit '検索' %>
-<% end %>
-
-<% @questions.each do |question| %>
-
-  <%= link_to user_path(question.user.id) do %>
-    <%= attachment_image_tag question.user, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
-  <% end %>
-
-  <%= question.user.name %><br>
-
-  <%= link_to question_path(question) do %>
-    <%= question.title %>
-  <% end %><br>
-
-  <%= question.body %><br>
-
-
-
-
-  <% if question.is_solved == true %>
-  解決済み
-  <% else %>
-  回答受付中
-  <% end %>
-
-<% end %>
+<%= render 'layouts/header', user: @user %>
+<div class="container pt-3 pb-3">
+  <div class="row mx-auto mt-1">
+    <div class="col-10 mx-auto bg-white" style="width:1%;">
+      <h2 class="mt-2 pb-1 text-center">質問掲示板</h2>
+      <div class="text-right">
+        <%= search_form_for @q, url: search_questions_path do |f| %>
+          <%= f.search_field :title_cont, :placeholder => 'キーワード検索' %>
+          <%= f.submit '検索', class: "btn btn-success btn-sm" %>
+        <% end %>
+      </div>
+      <div class="text-center"><%= link_to "質問する", new_question_path, class: "fas fa-edit btn btn-danger btn-lg" %></div>
+      <table class="table mt-4">
+        <% @questions.each do |question| %>
+        <tr>
+          <th style="width:10%">
+            <%= link_to user_path(question.user.id) do %>
+              <%= attachment_image_tag question.user, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
+            <% end %>
+          </th>
+          <th class="align-bottom", style="width:10%"><%= question.user.name %>さん</th>
+          <th class="align-middle", style="width:10%">
+            <% if question.is_solved == true %>
+              <div class="text-danger">解決済み</div>
+            <% else %>
+              <div class="text-success text-center">回答<br>受付中</div>
+            <% end %>
+          </th>
+          <th style="width:60% heigh:10%">
+            <%= question.created_at.strftime('%m月%d日 %H:%M') %>
+            <br>
+            <div class="fas">
+              <%= link_to question_path(question) do %>
+                <%= question.title %>
+              <% end %>
+            </div>
+            <br>
+            <%= question.body %>
+          </th>
+          <th class="align-middle", style="width:10%">
+            <% if question.user == current_user %>
+              <%= link_to "", question_path(question), method: :delete, "data-confirm" => "質問を削除しますか？" , class: "fas fa-trash-alt btn btn-danger btn-sms" %>
+            <% end %>
+          </th>
+        </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>
 
