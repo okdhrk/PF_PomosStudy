@@ -1,12 +1,19 @@
-<h1>編集画面</h1>
-<%= form_with model: @study_times, url: update_time_path(@study_times), method: :patch, local:true do |f| %>
-  <h4>開始時刻</h4>
-  <% start_time = @study_times.begin_time %>
-  <%= start_time.month %>月 <%= start_time.day %>日
-  <%= f.datetime_select :begin_time, discard_year: true, discard_month: true, discard_day: true %>
-  <h4>終了時刻</h4>
-  <% end_time = @study_times.finish_time %>
-  <%= end_time.month %>月 <%= end_time.day %>日
-  <%= f.datetime_select :finish_time, discard_year: true, discard_month: true, discard_day: true %>
-  <%= f.submit '保存' %>
-<% end %>
+<%= render 'layouts/header', user: @user %>
+<div class="container pt-3">
+  <div class="row mx-auto mt-1">
+    <div class="col-5 mx-auto pb-4 text-center bg-white" style="width:1%;">
+      <h2 class="mt-2 pb-4"><%= @study_times.begin_time.strftime("%m月%d日(%a)") %>変更</h2>
+      <table class="table">
+         <%= form_with model: @study_times, url: update_time_path(@study_times), method: :patch, local:true do |f| %>
+            <div class="h4 pb-4">開始時刻
+              <%= f.datetime_select :begin_time, discard_year: true, discard_month: true, discard_day: true %>
+            </div>
+            <div class="h4 pb-4">終了時刻
+              <%= f.datetime_select :finish_time, discard_year: true, discard_month: true, discard_day: true %>
+            </div>
+            <%= f.submit '変更を保存する', class: "btn btn-success btn-lg" %>
+         <% end %>
+      </table>
+    </div>
+  </div>
+</div>
