@@ -3,11 +3,11 @@
   <div class="row mx-auto mt-1">
     <div class="col-10 mx-auto bg-white" style="width:1%;">
       <div class="pt-3 text-right">
-        <%= link_to "質問一覧に戻る", new_question_path, class: "fas fa-undo-alt text-success" %>
+        <%= link_to "質問一覧に戻る", questions_path, class: "fas fa-undo-alt text-success" %>
       </div>
 
       <!--質問した人の情報-->
-      <table class="table mt-4">
+      <table class="table ">
         <tr>
           <th style="width:10%">
             <%= attachment_image_tag @question.user, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
@@ -35,7 +35,7 @@
       <table class="table mt-4">
         <tr>
           <th>
-            <u class="h3"><%= @question.title %></u>
+            <u class="h3 fas"><%= @question.title %></u>
             <div class="pt-2"><%= @question.body %></div>
             <!--質問編集、削除ボタン-->
             <div class="pt-3 text-right">

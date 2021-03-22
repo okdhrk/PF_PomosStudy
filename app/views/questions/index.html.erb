@@ -26,12 +26,15 @@
               <div class="text-success text-center">回答<br>受付中</div>
             <% end %>
           </th>
-          <th style="width:60%">
+          <th style="width:60% heigh:10%">
             <%= question.created_at.strftime('%m月%d日 %H:%M') %>
             <br>
-            <%= link_to question_path(question) do %>
-              <%= question.title %>
-            <% end %><br>
+            <div class="fas">
+              <%= link_to question_path(question) do %>
+                <%= question.title %>
+              <% end %>
+            </div>
+            <br>
             <%= question.body %>
           </th>
           <th class="align-middle", style="width:10%">

@@ -1,13 +1,30 @@
-<h1>Questions#edit</h1>
-<p>Find me in app/views/questions/edit.html.erb</p>
-
-<%= form_with model:@question, local:true do |f| %>
-
-<label for="inputTitle">Title</label>
-<%= f.text_field :title, autofocus: true, id:"inputTitle", placeholder:"タイトル"%>
-
-<label for="inputBody">内容</label>
-<%= f.text_field :body, autofocus: true, id:"inputBody", placeholder:"内容"%>
-
-<%= f.submit "変更を保存" %>
-<% end %>
+<%= render 'layouts/header', user: @user %>
+<div class="container pt-3 pb-3">
+  <div class="row mx-auto mt-1">
+    <div class="col-10 mx-auto bg-white" style="width:1%;">
+      <div class="pt-3 text-right">
+        <%= link_to "質問に戻る", question_path(@question), class: "fas fa-undo-alt text-success" %>
+      </div>
+        <table class="table">
+          <tr>
+            <th style="width:10%">
+              <%= attachment_image_tag @question.user, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
+                <%= @question.user.name %>さん <%= @question.created_at.strftime('%m/%d %H:%M') %>
+                <%= form_with model:@question, local:true do |f| %>
+                <div class="pt-3 pl-2">
+                  <label for="inputTitle">タイトル</label><br>
+                    <%= f.text_area :title, autofocus: true, id:"inputTitle", placeholder:"タイトル", rows:'1', cols:'100' %>
+                  <label for="inputBody">質問内容</label>
+                  <%= f.text_area :body, autofocus: true, id:"inputBody", placeholder:"内容", rows:'5', cols:'100' %>
+                </div>
+                <div class="text-center">
+                  <%= f.submit "変更を保存", class: "btn btn-success" %>
+                </div>
+              <% end %>
+            </th>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
