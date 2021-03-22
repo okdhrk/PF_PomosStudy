@@ -2,7 +2,8 @@ class QuestionsController < ApplicationController
   before_action :set_q, only: [:index, :search]
 
   def index
-    @questions = Question.all
+    @user = current_user
+    @questions = Question.all.order(created_at: :desc)
   end
 
   def show
@@ -24,6 +25,7 @@ class QuestionsController < ApplicationController
   end
 
   def edit
+    @user = current_user
     @question = Question.find(params[:id])
     if @question.user != current_user
       redirect_to question_path(current_user.id)
