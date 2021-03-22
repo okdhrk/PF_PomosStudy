@@ -1,5 +1,30 @@
-<h1>Tweets#index</h1>
-<p>Find me in app/views/tweets/index.html.erb</p>
+<%= render 'layouts/header', user: @user %>
+<div class="container pt-3 pb-3">
+  <div class="row">
+    <!--ユーザーの部分テンプレート-->
+    <%= render 'users/prf', user: @user %>
+    <div class="col-md-8 bg-white">
+      <table class="table">
+        <% @tweets.each do |tweet| %>
+        <tr>
+          <th>
+            <% if tweet.user != current_user %>
+              <%= link_to user_path(tweet.user.id) do %>
+                <%= attachment_image_tag tweet.user, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
+              <% end %>
+            <% else %>
+              <%= attachment_image_tag tweet.user, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
+            <% end %>
+            <span class="align-bottom"><%= tweet.user.name %></span>
+            <div><%= tweet.body %></div>
+            <div class="text-right"><%= tweet.created_at.strftime('%m/%d %H:%M') %></div>
+          </th>
+        </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>
 <!--フォローしている人＋自分の投稿一覧-->
 <% @tweets.each do |tweet| %>
 <%= link_to user_path(tweet.user.id) do %>

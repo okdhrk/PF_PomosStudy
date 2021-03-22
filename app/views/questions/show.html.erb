@@ -7,13 +7,13 @@
       </div>
 
       <!--質問した人の情報-->
-      <table class="table ">
+      <table class="table">
         <tr>
           <th style="width:10%">
             <%= attachment_image_tag @question.user, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
           </th>
           </th>
-          <th  class="align-middle", style="width:15%">
+          <th class="align-middle", style="width:15%">
             <%= @question.user.name %>さん <%= @question.created_at.strftime('%m/%d %H:%M') %>
           </th>
           <th  class="align-bottom",style="width:55%">
