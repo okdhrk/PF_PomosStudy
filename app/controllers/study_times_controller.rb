@@ -53,12 +53,13 @@ class StudyTimesController < ApplicationController
   def update_time
     @study_time = current_user
     @study_time = StudyTime.find(params[:id])
+    @study_time.begin_time =
     @study_time.update(study_time_update_params)
     redirect_to study_times_study_time_path
   end
 
   def destroy
-    study_time = StudyTime.find(params[:id])
+    study_time = StudyTime.find(study_time_params)
     study_time.destroy
     redirect_to study_times_study_time_path
   end

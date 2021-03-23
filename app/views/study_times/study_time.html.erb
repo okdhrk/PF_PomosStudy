@@ -1,72 +1,127 @@
 <%= render 'layouts/header', user: @user %>
-<div class="container pt-3">
+<div class="container pt-3 pb-3">
   <div class="row mx-auto mt-1">
-    <div class="col-10 mx-auto bg-white" style="width:1%;">
+    <div class="col-5 mx-auto bg-white" style="width:1%;">
       <h2 class="mt-2 pb-1 text-center">学習時間一覧</h2>
       <% @year.each do |month| %>
         <% month.each do |day| %>
           <% @study_time.each do |study_time| %>
-          <% if study_time.is_same_month(day.month) %>
-            <% @ac = study_time.total_time %>
-          <% end %>
+            <% if study_time.is_same_month(day.month) %>
+              <% @ac = study_time.total_time %>
+            <% end %>
           <% end %>
           <% @ym = day.strftime('%Y年%m月') %>
         <% end %>
       <% end %>
       <h1><%= @ym %></h1>
       <i class="fas fa-user-clock"></i>今月の総学習時間:<%= @ac %>
-      <div class="text-center"><%= paginate @year, class: "text-center" %></div>
+      <div class="float-right"><%= paginate @year %></div>
       <table class="table table-bordered text-center table-sm">
-        <tr class="thead-dark">
-          <th class="fixed01">日付</th>
-          <th class="fixed01">学習開始時間</th>
-          <th class="fixed01">学習終了時間</th>
-          <th class="fixed01"</th>
-          <th class="fixed01">合計時間(/時間)</th>
-        </tr>
         <% @year.each do |month| %>
           <% month.each do |day| %>
-          <tr>
-            <th><%= day.strftime('%d日(%a)') %></th>
-            <th>
-              <!--学習開始-->
-              <% @study_time.each do |study_time| %>
-                <% if study_time.begin_time.to_date == day.to_date %>
-                  <%= study_time.begin_time.strftime("%H:%M") %><br><br>
-                <% end %>
-              <% end %>
-            </th>
-            <th>
-              <!--学習終了-->
-              <% @study_time.each do |study_time| %>
-                <% if (study_time.finish_time != nil) && (study_time.study_day == day.to_date) %>
-                  <%= study_time.finish_time.strftime("%H:%M") %>
-                  <!--日付を跨いだ時日付を表示-->
-                  <% if study_time.study_day != study_time.finish_time.to_date %>
-                    <%= study_time.finish_time.strftime('(%d日)') %>
-                  <% end %>
-                  <br><br>
-                <% end %>
-              <% end %>
-            </th>
-            <th>
-              <% @study_time.each do |study_time| %>
-                <% if (study_time.finish_time != nil) && (study_time.study_day == day.to_date) %>
-                    <%= link_to "編集", edit_study_time_path(study_time) %><br>
-                  <br>
-                <% end %>
-              <% end %>
-            </th>
-            <th>
-              <!--学習時間合計-->
-              <% @study_time.each do |study_time| %>
-                <% if (study_time.finish_time != nil) && (study_time.study_day == day.to_date) %>
-                    <%= study_time.total_time %><br>
-                  <br>
-                <% end %>
-              <% end %>
-            </th>
+            <tr>
+              <th colspan="4">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" href="#collapse<%= day.day %>"><%= day.strftime('%d日(%a)') %></a>
+                </h4>
+              </th>
             </tr>
+            <div class="panel-group">
+              <div class="panel panel-default">
+                <tr>
+                  <th>
+                    <div class="panel-heading">
+                    <div id="collapse<%= day.day %>" class="panel-collapse collapse">
+                      <div class="panel-body">
+                        開始時刻
+                      </div>
+                    </div>
+                  </th>
+                  <th>
+                    <div id="collapse<%= day.day %>" class="panel-collapse collapse">
+                      <div class="panel-body">
+                        終了時刻
+                      </div>
+                    </div>
+                  </th>
+                  <th>
+                    <div id="collapse<%= day.day %>" class="panel-collapse collapse">
+                      <div class="panel-body">
+
+                      </div>
+                    </div>
+                  </th>
+                  <th>
+                    <div id="collapse<%= day.day %>" class="panel-collapse collapse">
+                      <div class="panel-body">
+
+                      </div>
+                    </div>
+                  </th>
+                </tr>
+                <tr>
+                  <th>
+                    <div id="collapse<%= day.day %>" class="panel-collapse collapse">
+                      <div class="panel-body">
+                        <% @study_time.each do |study_time| %>
+                          <% if study_time.begin_time.to_date == day.to_date %>
+                            <%= study_time.begin_time.strftime("%H:%M") %><br><br>
+                          <% end %>
+                        <% end %>
+                      </div>
+                    </div>
+                  </th>
+                  </th>
+                  <th>
+                    <!--終了時刻-->
+                    <div id="collapse<%= day.day %>" class="panel-collapse collapse">
+                      <div class="panel-body">
+                        <% @study_time.each do |study_time| %>
+                          <% if (study_time.finish_time != nil) && (study_time.study_day == day.to_date) %>
+                            <%= study_time.finish_time.strftime("%H:%M") %>
+                            <!--日付を跨いだ時日付を表示-->
+                            <% if study_time.study_day != study_time.finish_time.to_date %>
+                              <%= study_time.finish_time.strftime('(%d日)') %>
+                            <% end %><br><br>
+                          <% end %>
+                        <% end %>
+                      </div>
+                    </div>
+                  </th>
+                  <th>
+                    <!--時刻の編集-->
+                    <div id="collapse<%= day.day %>" class="panel-collapse collapse">
+                      <div class="panel-body">
+                        <% @study_time.each do |study_time| %>
+                          <% if (study_time.finish_time != nil) && (study_time.study_day == day.to_date) %>
+                            <%= link_to "編集", edit_study_time_path(study_time) %><br><br>
+                          <% end %>
+                        <% end %>
+                      </div>
+                    </div>
+                  </th>
+                  <th>
+                    <!--合計時間-->
+                    <div id="collapse<%= day.day %>" class="panel-collapse collapse">
+                      <div class="panel-body">
+                        <!--学習時間合計-->
+                        <% @day_time = 0 %>
+                        <% @study_time.each do |study_time| %>
+                          <% if (study_time.finish_time != nil) && (study_time.study_day == day.to_date) %>
+                            <%= study_time.total_time %><br><br>
+                            <% @day_time = @day_time + study_time.total_time %>
+                          <% end %>
+                        <% end %>
+                        <%#= link_to day_time_path(@study_time) do %>
+                          <%#= @day_time.round(2) %>
+                        <%# end %>
+                      </div>
+                    </div>
+                  </th>
+                </div>
+              </div>
+            </tr>
+          </div>
           <% end %>
         <% end %>
       </table>

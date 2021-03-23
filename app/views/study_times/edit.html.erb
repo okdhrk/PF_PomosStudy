@@ -3,17 +3,15 @@
   <div class="row mx-auto mt-1">
     <div class="col-5 mx-auto pb-4 text-center bg-white" style="width:1%;">
       <h2 class="mt-2 pb-4"><%= @study_times.begin_time.strftime("%m月%d日(%a)") %>変更</h2>
-      <table class="table">
-         <%= form_with model: @study_times, url: update_time_path(@study_times), method: :patch, local:true do |f| %>
-            <div class="h4 pb-4">開始時刻
-              <%= f.datetime_select :begin_time, discard_year: true, discard_month: true, discard_day: true %>
-            </div>
-            <div class="h4 pb-4">終了時刻
-              <%= f.datetime_select :finish_time, discard_year: true, discard_month: true, discard_day: true %>
-            </div>
-            <%= f.submit '変更を保存する', class: "btn btn-success btn-lg" %>
-         <% end %>
-      </table>
+       <%= form_with model: @study_times, url: update_time_path(@study_times), method: :patch, local:true do |f| %>
+        <div class="h4 pb-4">
+          開始時刻<br><br>
+          <%= f.time_select :begin_time, discard_year: true, discard_month: true, discard_day: true %><br><br>
+          終了時刻<br><br>
+          <%= f.time_select :finish_time, discard_year: true, discard_month: true, discard_day: true %><br><br><br>
+          <%= f.submit '変更を保存する', class: "btn btn-success btn-lg" %>
+        </div>
+       <% end %>
     </div>
   </div>
 </div>

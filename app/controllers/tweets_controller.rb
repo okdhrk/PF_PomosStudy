@@ -1,8 +1,8 @@
 class TweetsController < ApplicationController
 
   def index
-    @user = current_user
-    @tweets = Tweet.where(user_id: [current_user.id, *current_user.following_ids]).order(created_at: :desc)
+    @tweets = Tweet.where(user_id: [current_user.id, *current_user.following_ids])
+    @tweets = Tweet.page(params[:page]).per(5).order(created_at: :desc)
     @tweet = Tweet.new(params[:id])
   end
 
