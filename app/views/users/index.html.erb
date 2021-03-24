@@ -61,7 +61,6 @@
                   </div>
                 <% end %>
               </div>
-
             </th>
           </tr>
           <% end %>
@@ -70,6 +69,9 @@
           <%= paginate @users %>
         </div>
       </div>
+      <%= link_to :back do %>
+        <i class="fas fa-undo"></i> もどる
+      <% end %>
     </div>
   </div>
 </div>

@@ -14,7 +14,7 @@
         <% end %>
       <% end %>
       <h1><%= @ym %></h1>
-      <i class="fas fa-user-clock"></i>今月の総学習時間:<%= @ac %>
+      <i class="fas fa-user-clock"></i>今月の総学習時間:<%= @ac %>時間
       <div class="float-right"><%= paginate @year %></div>
       <table class="table table-bordered text-center table-sm">
         <% @year.each do |month| %>

@@ -1,0 +1,46 @@
+<%= render 'layouts/header', user: current_user %>
+<div class="container pt-3 pb-3">
+  <div class="row mx-auto mt-1">
+    <div class="col-6 mx-auto bg-white" style="width:1%;">
+      <h2 class="mt-2 pb-1 text-center text-nowrap"><%= @user.name %>さんのフォロワー一覧</h2>
+      <% if @users.empty? %>
+        <div class="text-center h4 pt-5">フォローしているユーザーはいません</div>
+        <div class="text-center pt-2 pb-5"><%=link_to "フォローする人を探しに行きましょう！", users_path, class: "text-success" %></div>
+      <% else %>
+        <div class="pl-5 pr-5">
+          <table class="table pt-5 pl-5 text-nowrap">
+            <% @users.each do |followings_user| %>
+              <tr>
+                <th style="width:10%;">
+                  <%= link_to user_path(followings_user) do %>
+                    <%= attachment_image_tag followings_user, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
+                  <% end %>
+                </th>
+                <th class="align-middle" style="width:20%;">
+                  <%= followings_user.name %>
+                </th>
+                <th class="align-middle" style="width:70%;">
+                  <span class="pl-5">
+                    <%=link_to followings_user_path(followings_user), class: "text-success" do %>
+                      <%= followings_user.followings.count %>
+                    <% end %>
+                    フォロー
+                  </span>
+                  <span>
+                    <%=link_to followers_user_path(followings_user), class: "text-success" do %>
+                      <%= followings_user.followers.count %>
+                    <% end %>
+                    フォロワー
+                  </span>
+                </th>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+      <% end %>
+      <%= link_to :back do %>
+        <i class="fas fa-undo"></i> もどる
+      <% end %>
+    </div>
+  </div>
+</div>

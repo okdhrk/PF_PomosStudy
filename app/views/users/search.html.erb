@@ -1,14 +1,43 @@
-<% @results.each do |result| %>
+<%= render 'layouts/header', user: @user %>
+<div class="container pt-3 pb-3">
+  <div class="row mx-auto mt-1">
+    <div class="col-5 mx-auto bg-white" style="width:1%;">
+      <h2 class="mt-2 pb-1 text-center">検索結果</h2>
 
-<thead class="bg-light">
-        <tr>
-          <%= attachment_image_tag result, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
-          <%= result.name %>
-          <%= result.user_genre %>
+      <div class="pl-5 pr-5">
+        <table class="table pt-5 pl-5">
+          <tr>
+            <th>
+              <% @results.each do |result| %>
+                <%=link_to user_path(result) do %>
+                  <%= attachment_image_tag result, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
+                <% end %>
+                <%= result.name %>
+                (<%= result.user_genre %>)
+                <br>
+                <span class="pl-5">
+                  <%=link_to followings_user_path(result), class: "text-success" do %>
+                    <%= result.followings.count %>
+                  <% end %>
+                  フォロー
+                </span>
+                <span class="pl-3">
+                  <%=link_to followers_user_path(result), class: "text-success" do %>
+                    <%= result.followers.count %>
+                  <% end %>
+                  フォロワー
+                </span>
+              <% end %>
+            </th>
           </tr>
-        <tr>
-          <%= link_to "Usersのshow", user_path(result) %><br>
-        </tr>
-      </thead>
+        </table>
+      </div>
+      <%= link_to :back do %>
+        <i class="fas fa-undo"></i> もどる
+      <% end %>
+    </div>
+  </div>
+</div>
 
-<% end %>
+
+

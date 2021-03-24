@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 2021_03_20_092457) do
   end
 
   create_table "study_times", force: :cascade do |t|
-    t.integer "user_idrai
+    t.integer "user_id"
     t.date "study_day"
     t.integer "total_time"
     t.datetime "created_at", null: false

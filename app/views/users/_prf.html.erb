@@ -2,7 +2,9 @@
   <div class="pt-4">
     <%= attachment_image_tag user, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
     <span class="align-bottom fas">
-      <%= user.name %>(
+      <%=link_to user_path(user), class: "text-success" do %>
+        <%= user.name %>
+      <% end %>(
       <% if user.user_genre == nil %>
         <%= link_to "未設定", edit_user_path(user), class: "text-success" %>
       <% else %>
@@ -14,13 +16,13 @@
     <tr>
       <th class="text-center">
         <span class="pr-3">
-          <%=link_to followings_user_path(user), class: "text-success" do %>
+          <%=link_to followings_user_path(user.id), class: "text-success" do %>
             <%= user.followings.count %>
           <% end %>
           フォロー
         </span>
         <span class="pr-3">
-          <%=link_to followers_user_path(user), class: "text-success" do %>
+          <%=link_to followers_user_path(user.id), class: "text-success" do %>
             <%= user.followers.count %>
           <% end %>
           フォロワー

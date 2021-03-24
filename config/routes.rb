@@ -14,11 +14,11 @@ Rails.application.routes.draw do
       get 'search'
     end
   end
-  get 'users/unsubscribe' => 'users#unsubscribe'
+
+  get '/followings_user/:id' => 'users#followings', as: 'followings_user'
+  get '/followers_user/:id' => 'users#followers', as: 'followers_user'
 
   resources :relationships, only: [:create, :destroy]
-  get 'followings_user' => 'users#followings'
-  get 'followers_user' => 'users#followers'
 
   resources :tweets, only: [:index, :new, :create, :destroy, :show] do
     resource :claps, only: [:create, :destroy]

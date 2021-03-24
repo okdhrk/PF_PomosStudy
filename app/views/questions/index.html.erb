@@ -10,7 +10,7 @@
         <% end %>
       </div>
       <div class="text-center"><%= link_to "質問する", new_question_path, class: "fas fa-edit btn btn-danger btn-lg" %></div>
-      <table class="table mt-4">
+      <table class="table mt-4 text-nowrap">
         <% @questions.each do |question| %>
         <tr>
           <th style="width:10%">
@@ -56,6 +56,9 @@
         </tr>
         <% end %>
       </table>
+      <div class="float-right">
+        <%= paginate @questions %>
+      </div>
     </div>
   </div>
 </div>

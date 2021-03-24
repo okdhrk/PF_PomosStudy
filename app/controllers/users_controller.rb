@@ -8,20 +8,21 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @user_question = @user.questions.page(params[:page]).per(5).order(created_at: :desc)
   end
 
   def edit
     @user = User.find(params[:id])
     # ログインユーザーでないとき
     if @user != current_user
-      redirect_to user_path(current_user.id)
+      redirect_to tweets_path
     end
   end
 
   def update
     @user = User.find(params[:id])
     @user.update(user_params)
-    redirect_to user_path(@user.id)
+    redirect_to tweets_path
   end
 
   def unsubscribe
@@ -31,13 +32,11 @@ class UsersController < ApplicationController
   def followings
     @user =User.find(params[:id])
     @users =@user.followings.page(params[:page])
-    render :show_followings
   end
 
   def followers
     @user =User.find(params[:id])
     @users =@user.followers.page(params[:page])
-    render :show_followers
   end
 
   def search
