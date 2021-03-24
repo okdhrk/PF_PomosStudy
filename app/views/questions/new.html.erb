@@ -7,21 +7,21 @@
       </div>
       <h2 class="mt-2 pb-1 text-center">質問作成</h2>
       <table class="table">
-        <%= form_with model: @question, local:true do |f| %>
         <tr>
           <th>
-            <div class="pt-3 pl-2">タイトル
-              <%= f.text_area :title, rows:'1', cols:'100' %>
-            </div>
-            <div class="pt-3 pl-2">質問内容
-              <%= f.text_area :body, rows:'5', cols:'100' %>
-            </div>
-            <div class="text-center">
-              <%= f.submit '投稿する', class: "btn btn-danger" %>
-            </div>
+            <%= form_with model: @question, local:true do |f| %>
+              <div class="pt-3 pl-2">タイトル
+                <%= f.text_area :title, rows:'1', cols:'100' %>
+              </div>
+              <div class="pt-3 pl-2">質問内容
+                <%= f.text_area :body, rows:'5', cols:'100' %>
+              </div>
+              <div class="text-center">
+                <%= f.submit '投稿する', class: "btn btn-danger" %>
+              </div>
+            <% end %>
           </th>
         </tr>
-        <% end %>
       </table>
     </div>
   </div>

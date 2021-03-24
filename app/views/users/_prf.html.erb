@@ -1,31 +1,28 @@
-<div class="col-md-4 mx-auto bg-white">
+<div class="col-md-4 mx-auto bg-white pl-5">
   <div class="pt-4">
     <%= attachment_image_tag user, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
-    <span class="align-bottom fas"><%= user.name %></span>
-    <span class="align-bottom h2 text-right pl-5"><%= link_to "", new_tweet_path, class: "fas fa-edit text-right text-danger" %></span>
+    <span class="align-bottom fas">
+      <%=link_to user_path(user), class: "text-success" do %>
+        <%= user.name %>
+      <% end %>(
+      <% if user.user_genre == nil %>
+        <%= link_to "未設定", edit_user_path(user), class: "text-success" %>
+      <% else %>
+        <%= user.user_genre %>
+      <% end %>)
+    </span>
   </div>
   <table class="table mt-1">
     <tr>
-      <th>活用方法：
-        <span>
-          <% if user.user_genre == nil %>
-            <%= link_to "未設定", edit_user_path(user), class: "text-success" %>
-          <% else %>
-            <%= user.user_genre %>
-          <% end %>
-        </span>
-      </th>
-    </tr>
-    <tr>
       <th class="text-center">
         <span class="pr-3">
-          <%=link_to followings_user_path(user), class: "text-success" do %>
+          <%=link_to followings_user_path(user.id), class: "text-success" do %>
             <%= user.followings.count %>
           <% end %>
           フォロー
         </span>
         <span class="pr-3">
-          <%=link_to followers_user_path(user), class: "text-success" do %>
+          <%=link_to followers_user_path(user.id), class: "text-success" do %>
             <%= user.followers.count %>
           <% end %>
           フォロワー
@@ -38,5 +35,14 @@
       <th class="text-center"><%= link_to "ユーザー設定", edit_user_path(user), class: "btn btn-outline-success btn-block fas btn-lg fa-user-cog" %></th>
     </tr>
     <% end %>
+    <tr>
+      <th>
+        <p></p>
+        <%= form_with model: @tweet, local:true do |f| %>
+          <%= f.text_area :body, rows:'2', cols:'25' %>
+          <%= f.submit '投稿', class: "btn btn-danger btn-sm" %>
+        <% end %>
+      </th>
+    </tr>
   </table>
 </div>

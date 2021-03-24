@@ -1,9 +1,76 @@
-<%= render 'layouts/header', user: @user %>
+<%= render 'layouts/header', user: current_user %>
 <div class="container pt-3 pb-3">
   <div class="row mx-auto mt-1">
-    <%= render 'users/prf', user: @user %>
-    <%= render 'tweets/index', user: @user, tweets: @tweets %>
+    <div class="col-5 mx-auto bg-white" style="width:1%;">
+      <h2 class="mt-2 pb-1 text-center"><%= @user.name %>さん</h2>
+      <div class="pl-5 pr-5">
+        <table class="table text-center">
+          <tr>
+            <th>
+              <%= attachment_image_tag @user, :image, :fill, 100, 100, fallback: "no_image.jpg" %>
+              <div class="pt-2 pb-5">
+                <% if @user.user_genre == nil %>
+                  活用方法：未設定
+                <% else %>
+                  活用方法：<%= @user.user_genre %>
+                <% end %>
+
+                <div>
+                  <span class="">
+                    <%=link_to followings_user_path(@user), class: "text-success" do %>
+                      <%= @user.followings.count %>
+                    <% end %>
+                    フォロー
+                  </span>
+                  <span class="pl-3">
+                    <%=link_to followers_user_path(@user), class: "text-success" do %>
+                      <%= @user.followers.count %>
+                    <% end %>
+                    フォロワー
+                  </span>
+                </div>
+
+                <div class="">
+                  <% if user_signed_in? && @user != current_user%>
+                    <div id=<%= "follow_form" +  @user.id.to_s %>>
+                    <% if current_user.followings?(@user) %>
+                      <%= render "relationships/unfollow", user: @user %>
+                    <% else %>
+                      <%= render "relationships/follow", user: @user %>
+                    <% end %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+              <h5 class="mt-2 pb-1 text-center">質問一覧</h2>
+            </th>
+          </tr>
+        </table>
+
+        <table class="table text-center">
+          <% @user_question.each do |question| %>
+            <tr>
+              <th>
+                <% if question.is_solved == true %>
+                  <div class="text-danger">解決済み</div>
+                <% else %>
+                  <div class="text-success text-center">回答受付中</div>
+                <% end %>
+
+                <%= link_to question_path(question) do %>
+                  <%= question.title %>
+                <% end %> <br>
+              </th>
+            </tr>
+          <% end %>
+        </table>
+        <div class="float-right">
+          <%= paginate @user_question %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+
 
 

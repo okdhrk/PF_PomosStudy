@@ -1,56 +1,66 @@
-<h1>Tweets#show</h1>
-<p>Find me in app/views/tweets/show.html.erb</p>
+<%= render 'layouts/header', user: current_user %>
+<div class="container pt-3 pb-3">
+  <div class="row">
+    <div class="col-md-8 mx-auto bg-white pr-5">
+      <table class="table">
+        <tr>
+          <th class="pt-3 pl-5 pr-5">
+            <%= attachment_image_tag @tweet.user, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
+            <%= @tweet.user.name %>
+            <div class="pl-5 pr-5"><%= @tweet.body %></div>
+            <div class="text-right">
+              <!--コメント-->
+              <i class="fas fa-comment-dots"></i><%= @tweet.tweet_comments.count %>
 
-<%= link_to user_path(@tweet.user.id) do %>
-<%= attachment_image_tag @tweet.user, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
-<% end %>
-<%= @tweet.user.name %>
-<%= @tweet.body %>
-<!--いいねボタン-->
-<% if @tweet.claped_by?(current_user) %>
-    <p>
-      <%= link_to tweet_claps_path(@tweet), method: :delete do %>
-        ♥<%= @tweet.claps.count %> いいね
-      <% end %>
-    </p>
-    <% else %>
-    <p>
-      <%= link_to tweet_claps_path(@tweet), method: :post do %>
-        ♡<%= @tweet.claps.count %> いいね
-      <% end %>
-    </p>
-  <% end %>
-
-コメント数：<%= @tweet.tweet_comments.count %>
-コメント<br>
-<!--コメント一覧-->
-
-<% @tweet.tweet_comments.each do |tweet_comment| %>
-  <tr>
-    <td>
-      <%= attachment_image_tag tweet_comment.user, :image, :fill, 60, 60, fallback: "no_image.jpg" %><br>
-      <%= tweet_comment.user.name %>
-    </td>
-    <td>
-      <%= tweet_comment.comment %>
-    </td>
-
-    <td>
-        <% if tweet_comment.user == current_user %>
-  <div class="comment-delete">
-    <%= link_to "削除", tweet_tweet_comment_path(tweet_comment.tweet, tweet_comment), method: :delete %>
+              <!--いいねボタン-->
+              <% if @tweet.claped_by?(current_user) %>
+                <%= link_to tweet_claps_path(@tweet), method: :delete do %>
+                  <i class="fas fa-thumbs-up"></i><%= @tweet.claps.count %>
+                <% end %>
+              <% else %>
+                <%= link_to tweet_claps_path(@tweet), method: :post do %>
+                  <i class="far fa-thumbs-up"></i>
+                <% end %>
+                <%= @tweet.claps.count %>
+              <% end %>
+            </div>
+            <div class="text-right"><%= @tweet.created_at.strftime('%m/%d %H:%M') %></div>
+            <!--削除ボタン-->
+            <div class="text-right">
+              <% if @tweet.user == current_user %>
+                <%= link_to "", tweet_path(@tweet), method: :delete, "data-confirm" => "Tweetを削除しますか？" , class: "fas fa-trash-alt btn btn-danger btn-sm" %>
+              <% end %>
+            </div>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <%= form_with(model:[@tweet, @tweet_comment], local: true ) do |f| %>
+              <%= f.text_area :comment, rows:'1', cols:'80' %>
+              <%= f.submit "コメントする", class: "btn btn-success" %>
+            <% end %>
+          </th>
+        </tr>
+        <tr>
+          <% @tweet.tweet_comments.each do |tweet_comment| %>
+            <th>
+              <%= attachment_image_tag tweet_comment.user, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
+              <%= tweet_comment.user.name %>
+              <div class="pl-5 pr-5"><%= tweet_comment.comment %></div>
+              <div class="text-right"><%= tweet_comment.created_at.strftime('%m/%d %H:%M') %></div>
+              <!--削除ボタン-->
+              <div class="text-right">
+                <% if tweet_comment.user == current_user %>
+                  <%= link_to "", tweet_tweet_comment_path(tweet_comment.tweet, tweet_comment), method: :delete, "data-confirm" => "コメントを削除しますか？" , class: "fas fa-trash-alt btn btn-danger btn-sm" %>
+                <% end %>
+              </div>
+            </th>
+          <% end %>
+        </tr>
+        <tr>
+          <th><%= link_to "", tweets_path, class: "fas fa-undo" %></th>
+        </tr>
+      </table>
+    </div>
   </div>
-        <% end %>
-    </td>
-  </tr>
-<% end %>
-
-<!--作成フォーム-->
-<%= form_with(model:[@tweet, @tweet_comment], local: true ) do |f| %>
-<%= f.text_area :comment, rows:'5', cols:'80' %>
-<%= f.submit "送信" %>
-<% end %>
-
-
-
-<%= link_to "tweetsのindex", tweets_path %>
+</div>

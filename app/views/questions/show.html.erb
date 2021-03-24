@@ -7,7 +7,7 @@
       </div>
 
       <!--質問した人の情報-->
-      <table class="table">
+      <table class="table text-nowrap">
         <tr>
           <th style="width:10%">
             <%= attachment_image_tag @question.user, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
@@ -18,9 +18,9 @@
           </th>
           <th  class="align-bottom",style="width:55%">
               <!--解決済みボタン-->
-              <% if @question.is_solved == false %>
+              <% if (@question.best_answer_id == 0) &&(@question.is_solved == false) %>
                 <% if current_user.id == @question.user_id %>
-                  <%= form_with(model: @question, url: questions_path, method: :post, local: true ) do |f| %>
+                  <%= form_with(model: @question, url: question_path, method: :patch, local: true ) do |f| %>
                     <%= f.check_box :is_solved, autofocus: true %>
                     <%= f.submit "解決済みにする", class: "btn btn-danger btn-sm", "data-confirm" => "この質問を解決済みにしてよろしいですか？" %>
                   <% end %>
@@ -46,7 +46,7 @@
             </div>
           </th>
         </tr>
-        <!--解答一覧-->
+        <!--回答一覧-->
         <% @question.answers.each do |answer| %>
         <tr>
           <th style="width:10%">
@@ -54,7 +54,7 @@
             <%= answer.user.name %>さん (<%= answer.created_at.strftime('%m/%d %H:%M') %>)
             <% if answer.user == current_user %>
               <span class="pl-3">
-                <%= link_to "", question_path(@question), method: :delete, "data-confirm" => "質問を削除しますか？" , class: "fas fa-trash-alt btn btn-danger btn-sms" %>
+                <%= link_to "", question_answer_path(@question, answer.id), method: :delete, "data-confirm" => "回答を削除しますか？" , class: "fas fa-trash-alt btn btn-danger btn-sms" %>
               </span>
             <% end %>
 
@@ -88,6 +88,9 @@
           </th>
         </tr>
       </table>
+      <%= link_to :back do %>
+        <i class="fas fa-undo"></i> もどる
+      <% end %>
     </div>
   </div>
 </div>

@@ -1,14 +1,38 @@
-<h1>Users#edit</h1>
-<p>Find me in app/views/users/edit.html.erb</p>
+<%= render 'layouts/header', user: current_user %>
+<div class="container pt-3 pb-3">
+  <div class="row mx-auto mt-1">
+    <div class="col-6 mx-auto bg-white" style="width:1%;">
+      <h3 class="mt-2 pb-1 text-center text-nowrap">ユーザー設定変更</h2>
+      <table class="table pt-5 pl-5 text-center">
+        <tr>
+          <th>
+            <%= form_with model: @user, local:true do |f| %>
 
-<h2>プロフィール編集</h2>
-<%= form_with model:@user, local:true do |f| %>
-  <label for="inputName">Name</label>
-  <%= f.text_field :name, autofocus: true, id:"inputName", placeholder:"名前"%><br>
-  あなたに一番近いジャンルを選んでね
-  <%= f.select :user_genre, User.user_genres.keys.to_a, {} %><br>
-  <%= attachment_image_tag @user, :image, :fill, 60, 60, fallback: "no_image.jpg" %><br>
-  <label for="inputImage">ProfileImage</label>
-  <%= f.attachment_field :image, placeholder: "プロフィール画像" %>
-  <%= f.submit "変更を保存" %>
-<% end %>
+              <label for="inputImgage">ユーザーアイコン</label><br>
+                <%= attachment_image_tag @user, :image, :fill, 60, 60, fallback: "no_image.jpg" %><br>
+                <%= f.attachment_field :image, size:"30", placeholder: "プロフィール画像" %><br><br>
+
+              <label for="inputName">お名前</label><br>
+                <%= f.text_field :name, size:"30", autofocus: true, id:"inputName", placeholder:"名前"%><br><br>
+
+              <label for="inputJunre"><%= @user.name %>さんの活用方法をお選びください</label><br>
+                <%= f.select :user_genre, User.user_genres.keys.to_a, {} %><br><br>
+
+              <%= f.submit "変更を保存", class: "btn btn-success" %>
+
+            <% end %>
+
+            <div class="pt-5"><%= link_to "メールアドレス・パスワード変更、退会はこちらから", edit_user_registration_path, class: "btn btn-danger" %></div>
+          </th>
+        </tr>
+      </table>
+      <%= link_to :back do %>
+        <i class="fas fa-undo"></i> もどる
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+
+

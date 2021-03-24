@@ -3,7 +3,7 @@ class QuestionsController < ApplicationController
 
   def index
     @user = current_user
-    @questions = Question.all.order(created_at: :desc)
+    @questions = Question.page(params[:page]).per(5).order(created_at: :desc)
   end
 
   def show
@@ -35,7 +35,11 @@ class QuestionsController < ApplicationController
   def update
     question = Question.find(params[:id])
     question.update(question_params)
-    redirect_to question_path(question)
+    if question.is_solved == true
+      redirect_to questions_path
+    else
+      redirect_to question_path(question)
+    end
   end
 
   def destroy
@@ -45,7 +49,7 @@ class QuestionsController < ApplicationController
   end
 
   def search
-    @results = @q.result
+    @results = @q.result.page(params[:page]).per(5).order(created_at: :desc)
   end
 
 

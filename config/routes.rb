@@ -14,11 +14,11 @@ Rails.application.routes.draw do
       get 'search'
     end
   end
-  get 'users/unsubscribe' => 'users#unsubscribe'
+
+  get '/followings_user/:id' => 'users#followings', as: 'followings_user'
+  get '/followers_user/:id' => 'users#followers', as: 'followers_user'
 
   resources :relationships, only: [:create, :destroy]
-  get 'followings_user' => 'users#followings'
-  get 'followers_user' => 'users#followers'
 
   resources :tweets, only: [:index, :new, :create, :destroy, :show] do
     resource :claps, only: [:create, :destroy]
@@ -40,7 +40,6 @@ Rails.application.routes.draw do
 
   resources :study_times, only: [:index, :new, :create, :destroy, :edit, :update]
   get 'study_times/study_time' => 'study_times#study_time'
-  patch 'study_times/study_time/:id' => 'study_times#update_time', as: 'update_time'
 
   get 'pomo_timer/long_time'
   get 'pomo_timer/short_resr'
