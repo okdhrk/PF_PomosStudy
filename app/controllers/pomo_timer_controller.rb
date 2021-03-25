@@ -1,4 +1,6 @@
 class PomoTimerController < ApplicationController
+  before_action :authenticate_user!
+
   def short_time
     @user = current_user
   end

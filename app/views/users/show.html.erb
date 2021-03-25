@@ -42,11 +42,27 @@
                   <% end %>
                 </div>
               </div>
-              <h5 class="mt-2 pb-1 text-center">質問一覧</h2>
             </th>
           </tr>
         </table>
 
+        <!--投稿一覧-->
+        <h5 class="mt-2 pb-1 text-center">投稿一覧</h2>
+        <table class="table text-center">
+          <% @user_tweet.each do |tweet| %>
+            <tr>
+              <th>
+                <%= tweet.body %><br>
+              </th>
+            </tr>
+          <% end %>
+        </table>
+        <div class="float-right">
+          <%= paginate @user_tweet %>
+        </div><br>
+
+        <!--質問一覧-->
+        <h5 class="mt-5 pb-1 text-center">質問一覧</h2>
         <table class="table text-center">
           <% @user_question.each do |question| %>
             <tr>

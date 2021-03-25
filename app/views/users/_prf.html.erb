@@ -37,8 +37,11 @@
     <% end %>
     <tr>
       <th>
+        
+        
+        
         <p></p>
-        <%= form_with model: @tweet, local:true do |f| %>
+        <%= form_with model: tweet, local:true do |f| %>
           <%= f.text_area :body, rows:'2', cols:'25' %>
           <%= f.submit '投稿', class: "btn btn-danger btn-sm" %>
         <% end %>

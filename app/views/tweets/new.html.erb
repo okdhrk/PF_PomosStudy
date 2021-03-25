@@ -1,20 +1,6 @@
-<%= render 'layouts/header', user: current_user %>
-<div class="container pt-3 pb-3">
-  <div class="row">
-    <div class="col-5 mx-auto pb-4 text-center bg-white" style="width:1%;">
-      <h2 class="mt-2 pb-4">新規投稿</h2>
-      
-    </div>
-  </div>
-</div>
-
-
-<h1>Tweets#new</h1>
-<p>Find me in app/views/tweets/new.html.erb</p>
-<%= @user.name %>
-<%= attachment_image_tag @user, :image, :fill, 60, 60, fallback: "no_image.jpg" %>
-<%= form_with model: @tweet, local:true do |f| %>
-    <h2>内容</h2>
-    <%= f.text_area :body %>
-    <%= f.submit '投稿' %>
+<% if @tweet.errors.any? %>
+  <%= @tweet.errors.count %>件のエラーが発生しました
+  <% @tweet.errors.full_messages.each do |message| %>
+    <%= message %>
+  <% end %>
 <% end %>
