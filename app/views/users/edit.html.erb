@@ -3,6 +3,12 @@
   <div class="row mx-auto mt-1">
     <div class="col-6 mx-auto bg-white" style="width:1%;">
       <h3 class="mt-2 pb-1 text-center text-nowrap">ユーザー設定変更</h2>
+      <% if @user.errors.any? %>
+        <%= @user.errors.count %>件のエラーが発生しました
+        <% @user.errors.full_messages.each do |message| %>
+          <%= message %>
+        <% end %>
+      <% end %>
       <table class="table pt-5 pl-5 text-center">
         <tr>
           <th>

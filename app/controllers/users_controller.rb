@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_q, only: [:index, :search]
 
   def index
@@ -8,7 +9,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @user_question = @user.questions.page(params[:page]).per(5).order(created_at: :desc)
+    @user_question = @user.questions.page(params[:page]).per(3).order(created_at: :desc)
+    @user_tweet = @user.tweets.page(params[:page]).per(3).order(created_at: :desc)
   end
 
   def edit
@@ -21,8 +23,11 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    @user.update(user_params)
-    redirect_to tweets_path
+    if @user.update(user_params)
+      redirect_to tweets_path
+    else
+      render 'users/edit'
+    end
   end
 
   def unsubscribe

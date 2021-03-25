@@ -59,5 +59,8 @@ class User < ApplicationRecord
   # 勉強時間
   has_many :study_times, dependent: :destroy
 
+  # バリデーション
+  validates :name, presence: true
+
 
 end

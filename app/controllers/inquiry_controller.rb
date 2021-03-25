@@ -1,4 +1,5 @@
 class InquiryController < ApplicationController
+
   def index
     @user = current_user
     @inquiry = Inquiry.new

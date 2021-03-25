@@ -1,4 +1,5 @@
 class TweetsController < ApplicationController
+  before_action :authenticate_user!
 
   def index
     @tweets = Tweet.where(user_id: [current_user.id, *current_user.following_ids]).page(params[:page]).per(5).order(created_at: :desc)
