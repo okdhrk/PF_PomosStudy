@@ -15,11 +15,11 @@
         </div><br>
       <% end %>
       <div>
-        <%- resource_class.omniauth_providers.each do |provider| %>
-          <%= link_to omniauth_authorize_path(resource_name, provider), class: "btn btn-primary btn-lg" do %>
-          <i class="fab fa-google"></i>oogleでログイン
-          <% end %>
-        <% end %>
+        <%#- resource_class.omniauth_providers.each do |provider| %>
+          <%#= link_to omniauth_authorize_path(resource_name, provider), class: "btn btn-primary btn-lg" do %>
+          <!--<i class="fab fa-google"></i>oogleでログイン-->
+          <%# end %>
+        <%# end %>
       </div><br>
       <div class="mb-5">アカウントを登録せずにログインする<br>
         <%= link_to "ゲストログイン", homes_guest_sign_in_path, method: :post, class: "btn btn-success btn-lg" %>

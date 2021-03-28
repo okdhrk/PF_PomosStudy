@@ -40,20 +40,12 @@ class StudyTimesController < ApplicationController
     redirect_to study_times_path
   end
 
-# 打刻の編集
-  def update_time
-    @study_time = StudyTime.find(params[:id])
-    @study_time.update(study_time_params)
-    redirect_to study_times_study_time_path
-  end
-
-# 打刻
   def update
     user = current_user
     @study_time = StudyTime.find(params[:id])
     if (@study_time.begin_time != nil) && (@study_time.finish_time != nil)
-      @study_time.update(study_time_update_patams)
-      redirect_to study_times_study_time_path
+        @study_time.update(study_time_update_patams)
+        redirect_to study_times_study_time_path
     else
       # 終了時刻の打刻
       study_time = user.study_times.last

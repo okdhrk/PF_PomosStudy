@@ -2,6 +2,13 @@
 <div class="container pt-3">
   <div class="row mx-auto mt-1">
     <div class="col-5 mx-auto pb-4 text-center bg-white" style="width:1%;">
+
+      <% if @begin_finish_check.errors.any? %>
+        <% @begin_finish_check.errors.full_messages.each do |message| %>
+          <%= message %>
+        <% end %>
+      <% end %>
+
       <h2 class="mt-2 pb-4"><%= @study_times.begin_time.strftime("%m月%d日(%a)") %>変更</h2>
        <%= form_with model: @study_times, local:true do |f| %>
         <div class="h4 pb-4">

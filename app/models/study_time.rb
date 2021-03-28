@@ -19,12 +19,12 @@ class StudyTime < ApplicationRecord
 
   #validates :begin_time, presence: true
   #validates :finish_time, presence: true
-  #validate :begin_finish_check
+  validate :begin_finish_check
 
-  #def begin_finish_check
-    #errors.add(:finish_time, "の日付を正しく記入してください。") unless
-    #self.begin_time.to_s < self.finish_time.to_s
-  #end
+  def begin_finish_check
+    errors.add(:finish_time, "の日付を正しく記入してください。") unless
+    self.begin_time.to_s < self.finish_time.to_s
+  end
 
 
   #validate :start_end_check
