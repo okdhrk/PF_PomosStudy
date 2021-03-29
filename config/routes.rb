@@ -40,6 +40,7 @@ Rails.application.routes.draw do
 
   resources :study_times, only: [:index, :new, :create, :destroy, :edit, :update]
   get 'study_times/study_time' => 'study_times#study_time'
+  patch 'study_times/:id' => 'study_times#update_time', as: 'update_time_study_time'
 
   get 'pomo_timer/long_time'
   get 'pomo_timer/short_resr'

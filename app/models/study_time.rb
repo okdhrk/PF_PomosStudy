@@ -17,4 +17,24 @@ class StudyTime < ApplicationRecord
   end
 
 
+  #validates :begin_time, presence: true
+  #validates :finish_time, presence: true
+  validate :begin_finish_check
+
+  def begin_finish_check
+    errors.add(:finish_time, "の日付を正しく記入してください。") unless
+    self.begin_time.to_s < self.finish_time.to_s
+  end
+
+
+  #validate :start_end_check
+
+    #　 なんでこの記述で動作するのかわかりません。受取時間が、現在の時間よりも過ぎているとorder.createできない。
+  #def start_end_check
+    #errors.add(:pick_up_time, "の日付を正しく記入してください。") unless
+    # string型に変換しないと、比較できなかった。
+    #Time.zone.now.to_s(:time) < self.pick_up_time.to_s(:time)
+ # end
+
+
 end

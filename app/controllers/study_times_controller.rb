@@ -24,7 +24,6 @@ class StudyTimesController < ApplicationController
   end
 
   def edit
-    @user = current_user
     @study_times = StudyTime.find(params[:id])
   end
 
@@ -41,29 +40,21 @@ class StudyTimesController < ApplicationController
     redirect_to study_times_path
   end
 
-# 打刻
   def update
     user = current_user
-    study_time = user.study_times.last
-    study_time.finish_time = Time.current
-    study_time.update(study_time_params)
-    redirect_to study_times_path
-  end
-
-# 打刻の編集
-  def update_time
-    @study_time = current_user
     @study_time = StudyTime.find(params[:id])
-    @study_time.begin_time =
-    @study_time.update(study_time_update_params)
-    redirect_to study_times_study_time_path
+    if (@study_time.begin_time != nil) && (@study_time.finish_time != nil)
+        @study_time.update(study_time_update_patams)
+        redirect_to study_times_study_time_path
+    else
+      # 終了時刻の打刻
+      study_time = user.study_times.last
+      study_time.finish_time = Time.current
+      study_time.update(study_time_params)
+      redirect_to study_times_path
+    end
   end
 
-  def destroy
-    study_time = StudyTime.find(study_time_params)
-    study_time.destroy
-    redirect_to study_times_study_time_path
-  end
 
 
   private
@@ -71,8 +62,9 @@ class StudyTimesController < ApplicationController
     params.permit(:user_id, :total_time, :begin_time, :finish_time )
   end
 
-  def study_time_update_params
+  def study_time_update_patams
     params.require(:study_time).permit(:begin_time, :finish_time )
   end
+
 
 end

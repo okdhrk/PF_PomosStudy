@@ -1,2 +1,53 @@
-<h1>Homes#about</h1>
-<p>Find me in app/views/homes/about.html.erb</p>
+<%= render 'homes/header', user: current_user %>
+<div class="container pt-3 pb-3">
+  <div class="row mx-auto mt-1">
+    <div class="col-11 mx-auto bg-white" style="width:1%;">
+      <h2 class="mt-2 pb-1 text-center">Pomo's Studyの使い方</h2>
+
+      <table class="table mt-4">
+        <tr>
+          <th>
+            <%= link_to tweets_path, class: "text-danger fas fa-user-circle" do %>
+              <%= current_user.name %>さんのマイページ
+            <% end %>
+          </th>
+          <th>
+            ログインしているユーザーのフォロー、フォロワー一覧、投稿一覧、質問一覧が見れます。
+            <br>
+            また今日の成果を報告することもできて、フォローしているユーザーにコメントやいいねができます。
+            <br>
+            <%= link_to "探す", users_path, class: "text-success fas fa-search" %>から、全ユーザーが表示されるので自分と同じような使い方をしている人を見るけることもできます。
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <%= link_to "タイマー", pomo_timer_long_time_path, class: "text-danger fas fa-stopwatch" %>
+          </th>
+          <th>
+            ポモドーロ勉強法は25分学習→5分休憩を繰り返し、３セット目の休憩では30分とります。
+            <br>
+            そのため、25分、5分、30分タイマーで計測できます。
+          </th>
+        </tr>
+        <tr>
+          <th><%= link_to "学習時間", study_times_path, class: "text-danger fas fa-chalkboard-teacher" %></th>
+          <th>
+            学習時間の打刻と、学習時間の一覧、編集を確認することができます。
+          </th>
+        </tr>
+        <tr>
+          <th><%= link_to "質問掲示板", questions_path, class: "text-danger fas fa-comment-alt" %></th>
+          <th>
+            分からないことを質問してみましょう！
+            <br>
+            質問を検索することもできます。
+          </th>
+        </tr>
+        <tr>
+          <th><%= link_to "お問い合わせ", inquiry_path, class: "text-danger fas fa-paper-plane" %></th>
+          <th>アプリケーションに関する改善要求等お待ちしております！</th>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

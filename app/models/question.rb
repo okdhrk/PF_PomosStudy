@@ -4,4 +4,8 @@ class Question < ApplicationRecord
 
   has_many :answers, dependent: :destroy
 
+  # バリデーション
+  validates :title, presence: true
+  validates :body, presence: true
+
 end
