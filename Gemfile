@@ -92,5 +92,3 @@ gem 'kaminari','~> 1.2.1'
 
 # 検索機能
 gem 'ransack'
-
-gem 'rails-i18n'

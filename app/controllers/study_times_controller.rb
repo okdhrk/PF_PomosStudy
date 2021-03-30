@@ -59,7 +59,7 @@ class StudyTimesController < ApplicationController
 
   private
   def study_time_params
-    params.permit(:user_id, :total_time, :begin_time, :finish_time )
+    params.permit(:user_id, :total_time, :begin_time, :finish_time, :study_time )
   end
 
   def study_time_update_patams
