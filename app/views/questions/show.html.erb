@@ -64,14 +64,16 @@
             </div>
 
             <!--ベストアンサーボタン-->
-            <div class="text-right">
-              <div class="ba-child">
-                <%= form_with(model: @question, local: true, data: {confirm: "#{answer.user.name}さんの回答をベストアンサーにします。この修正は変更できませんが、よろしいですか？"}) do |f| %>
-                  <%= f.hidden_field :best_answer_id, value: @answer %>
-                  <%= f.submit 'ベストアンサー', disabled: @question.best_answer_id.present?, class: "btn btn-danger" %>
-                <% end %>
+            <% if current_user.id == @question.user_id %>
+              <div class="text-right">
+                <div class="ba-child">
+                  <%= form_with(model: @question, local: true, data: {confirm: "#{answer.user.name}さんの回答をベストアンサーにします。この修正は変更できませんが、よろしいですか？"}) do |f| %>
+                    <%= f.hidden_field :best_answer_id, value: @answer %>
+                    <%= f.submit 'ベストアンサー', disabled: @question.best_answer_id.present?, class: "btn btn-danger" %>
+                  <% end %>
+                </div>
               </div>
-            </div>
+            <% end %>
           </th>
         </tr>
         <% end %>
