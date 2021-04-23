@@ -3,10 +3,10 @@ class StudyTime < ApplicationRecord
   belongs_to :user
 
   def total_time
-    if self.begin_time && self.finish_time
-      return ((self.finish_time - self.begin_time) / 60 / 60).round(2)
+    if begin_time && finish_time
+      return ((finish_time - begin_time) / 60 / 60).round(2)
     else
-      return 0
+      0
     end
   end
 
