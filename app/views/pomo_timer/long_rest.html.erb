@@ -31,8 +31,11 @@
 
   window.onload = function(){
 }
+// varで変数宣言
+// 30分を秒にした
  var time = 1800;
  var counter;
+// getElementByIdは、任意のHTMLタグで指定したIDにマッチするドキュメント要素を取得するメソッド
  var min = document.getElementById("min");
  var sec = document.getElementById("sec");
  var start = document.getElementById("start");
@@ -43,11 +46,14 @@
 toggle();
 counter = setInterval( count, 1000 );
 }
+// setInterval→一定時間ごとに処理を繰り返す
+// 1000ミリ秒ごとにカウントする
 
 stop.onclick = function() {
 toggle();
 clearInterval( counter );
 }
+// clearIntervaでカウントを
 
 reset.onclick = function() {
 time = 1800;
